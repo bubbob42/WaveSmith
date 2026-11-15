@@ -1,0 +1,158 @@
+; Install -- Installer script for WaveSmith (V44 Installer language, works
+; on V42+)
+; =========================================================================
+; Staged by the GNUmakefile's `release-stage` target (comments stripped by
+; tools/check_installer.py --strip) as Install at the root of the package's
+; drawer, beside Files/ and WaveSmith.readme.
+;
+; ONE drawer, WaveSmith, in the place the user picks (SYS:Tools by default):
+;
+;   WaveSmith, .info               the program
+;   Help/<language>/               the manual, english and deutsch
+;   Catalogs/<language>/           the German translation
+;
+; Nothing goes into LIBS:, DEVS:, S: or ENVARC:. WaveSmith plays through a
+; Prisma Megamix card (prisma.library 3 or newer) or through AHI 4; with
+; neither it says so when it starts and does not open its window, so the
+; closing page says what is missing. Files other than WAV are decoded on the
+; card (prismadsp.library 1.1 or newer): without it WaveSmith opens WAV
+; files only.
+;
+; The icons come as GlowIcons too (Files/Icons/Glow): WaveSmith's and its
+; drawer's by Martin "Mason" Merz, Help's drawers and manuals AmigaOS 3.2's
+; own -- each our own classic icon with the colour imagery appended (the
+; GNUmakefile merges them), so a GlowIcon is a SUPERSET: icon.library V44+
+; draws the colour art, anything older reads only the classic part.
+; Files/Icons/Glow/WaveSmith mirrors the icons in Files/WaveSmith and is
+; copied over them whole. A novice gets them (Herald's and the Prisma
+; package's rule); above novice the user chooses. askchoice returns the
+; 0-BASED index.
+;
+; A drawer icon that is already there is kept, with its place and its
+; window; only a drawer made now gets ours. WaveSmith's own icon is
+; replaced: it carries no tooltypes, WaveSmith reads none.
+; =========================================================================
+
+; THE WELCOME PAGE IS NOT A PLACE FOR PROSE: it shares the page with the
+; user-level radios. One line.
+(welcome "This will install WaveSmith, which trims a recording's ends by eye and ear.\n")
+
+; --- what it needs -----------------------------------------------------------
+(set #os (/ (getversion) 65536))
+(if (< #os 47)
+    (abort ("WaveSmith needs AmigaOS 3.2 (version 47); this is version %ld." #os))
+)
+(if (= (exists "Files/WaveSmith/WaveSmith") 0)
+    (abort "The drawer 'Files/WaveSmith' is missing from this drawer.\n\n"
+           "Run the Installer from the unpacked WaveSmith drawer.\n")
+)
+
+; Something to play through: the card's library, or AHI. exists with
+; (noreq): no "please insert" for a volume that is not there. No (message)
+; for it: a notice a novice must see goes on the closing page (a message
+; page's button is where nobody expects it).
+(set #lib 0)
+(if (exists "LIBS:prisma.library" (noreq))
+    (set #lib (/ (getversion "LIBS:prisma.library") 65536))
+)
+(set #ahi 0)
+(if (exists "DEVS:ahi.device" (noreq))
+    (set #ahi (/ (getversion "DEVS:ahi.device") 65536))
+)
+(set #playnote "")
+(if (AND (< #lib 3) (< #ahi 4))
+    (set #playnote
+         (cat "\n\nWaveSmith plays through a Prisma Megamix card "
+              "(prisma.library 3 or newer) or through AHI (ahi.device 4 or "
+              "newer). Neither is installed: WaveSmith says so when it "
+              "starts and does not open. Install AHI, or the Prisma Megamix "
+              "software, first."))
+)
+
+; --- the drawer -----------------------------------------------------------------
+; Only WHERE it is made is asked: an askdir for the parent, "WaveSmith"
+; tacked on. SYS:Tools by default, SYS: on a system without a Tools drawer
+; (an askdir cannot offer a drawer that is not there).
+(set #defbase "SYS:")
+(if (= (exists "SYS:Tools" (noreq)) 2) (set #defbase "SYS:Tools"))
+(if (= @user-level 0)
+    (set #base #defbase)
+    (set #base
+        (askdir
+            (prompt "Where should the WaveSmith drawer be made?\n"
+                    "A 'WaveSmith' drawer is created there.")
+            (help "WaveSmith, its manual and its translation belong "
+                  "together in one drawer.\n\n"
+                  @askdir-help)
+            (default #defbase)
+        )
+    )
+)
+(set #dest (tackon #base "WaveSmith"))
+(set @default-dest #dest)
+
+; --- which icons? --------------------------------------------------------------
+(set #glow 1)
+(if (> @user-level 0)
+    (set #glow
+        (askchoice
+            (prompt "Which icons should WaveSmith, its drawer and its manual have?")
+            (help "WaveSmith's GlowIcons were drawn by Martin 'Mason' Merz; "
+                  "its manual and Help drawers get AmigaOS 3.2's own. They "
+                  "carry the classic 4-colour artwork inside them, so they "
+                  "are safe on every system: AmigaOS 3.5, 3.9, 3.1.4 and "
+                  "3.2 draw the colourful version, and older ones draw the "
+                  "same 4-colour icon the classic set has.\n\n"
+                  "A drawer icon that is already there is kept as it is.\n\n"
+                  @askchoice-help)
+            (choices "4-colour classic icons" "GlowIcons")
+            (default 1)
+        )
+    )
+)
+(if (= #glow 1)
+    (set #drawericon "Files/Icons/Glow/WaveSmithDrawer.info")
+    (set #drawericon "Files/WaveSmith.info")
+)
+
+; (makedir (infos)) would give a NEW drawer the system's default icon; ours
+; goes there instead, and only there: an icon somebody arranged is theirs.
+(set #haddrawericon (exists (cat #dest ".info")))
+(if (= (exists #dest) 0) (makedir #dest))
+
+; --- the files -------------------------------------------------------------------
+(copyfiles
+    (prompt ("Copying WaveSmith into\n%s." #dest))
+    (help "The program and its icon, the manual in English and German in "
+          "Help, and the German translation in Catalogs.\n\n"
+          @copyfiles-help)
+    (source "Files/WaveSmith")
+    (dest #dest)
+    (all)
+)
+; the GlowIcons over the classic ones just copied: the program's, Help's
+; drawers', the manuals'
+(if (= #glow 1)
+    (copyfiles
+        (prompt "Copying the GlowIcons.")
+        (help @copyfiles-help)
+        (source "Files/Icons/Glow/WaveSmith")
+        (dest #dest)
+        (all)
+    )
+)
+(if (not #haddrawericon)
+    (copyfiles
+        (prompt "Copying the drawer's icon.")
+        (help @copyfiles-help)
+        (source #drawericon)
+        (dest #base)
+        (newname "WaveSmith.info")
+    )
+)
+
+(exit "WaveSmith is installed in " #dest ".\n\n"
+      "Start it from its drawer, or make it the default tool of your sound "
+      "files' icons. The Help key in its window opens the manual at the "
+      "page for what is under the mouse pointer."
+      #playnote)

@@ -1,0 +1,483 @@
+@database WaveSmith.guide
+@$VER: WaveSmith.guide 1.0 (15.11.2026)
+@author "Marcus Gerards"
+@wordwrap
+
+@node Main "WaveSmith"
+
+@{b}WaveSmith@{ub} - a recording's ends trimmed by eye and ear
+
+WaveSmith opens a recording, finds where the music starts and ends,
+and shows the lead-in and the run-out shaded, In and Out set before
+and after them. Listen to both ends, drag the handles if the guess was
+not right, and Save: the file is written anew without the shaded
+parts. It also cuts parts out, splits a side into its tracks at
+markers and writes a cue sheet for them.
+
+  @{" Requirements                                        " link Requirements}
+  @{" Starting      - from Workbench or the Shell         " link Starting}
+  @{" The window    - its parts, the status line          " link Window}
+  @{" The waveform  - zooming, scrolling, the mouse       " link Waveform}
+  @{" Trimming      - In, Out, the suggestion             " link Trimming}
+  @{" Listening     - Play, Listen, Loop, card or AHI     " link Listening}
+  @{" Editing       - Cut out, Undo, Split at the cursor  " link Editing}
+  @{" Markers       - tracks, Split at markers, cue sheet " link Markers}
+  @{" Saving        - Save, Save as, Next, the files      " link Saving}
+  @{" Settings      - the Settings menu                   " link Settings}
+  @{" Menus                                               " link Menus}
+  @{" Keys                                                " link Keys}
+  @{" Messages      - when something goes wrong           " link Messages}
+  @{" History                                             " link History}
+  @{" Thanks                                              " link Thanks}
+  @{" Licence                                             " link Licence}
+
+The Help key opens the page about what is under the mouse pointer.
+Rest the pointer for a moment on a button, a handle or the sound, and
+a bubble says what it is.
+
+@endnode
+
+@node Requirements "WaveSmith: Requirements"
+
+@{b}Requirements@{ub}
+
+  - AmigaOS 3.2 (ReAction)
+  - for playing: a Prisma Megamix card with prisma.library 3 or newer,
+    or AHI (ahi.device 4 or newer)
+  - for files other than WAV (AIFF, FLAC, MP3, Ogg Vorbis, AAC): the
+    card and prismadsp.library 1.1 or newer, which decodes them
+
+WAV files are read as they are: 16-bit PCM, mono or stereo. The sound
+stays in the file while WaveSmith works on it; only its picture is
+kept in memory, so a whole record side of 25 minutes is no trouble.
+
+@endnode
+
+@node Starting "WaveSmith: Starting"
+
+@{b}Starting@{ub}
+
+The Installer in WaveSmith's package (double-click Install) puts it
+into a drawer of its own, SYS:Tools/WaveSmith unless told otherwise,
+with this manual in Help and the German translation in Catalogs; it
+offers the GlowIcons or the classic icons. By hand, copy the drawer
+Files/WaveSmith from the package anywhere. Nothing goes into LIBS:,
+DEVS: or S:.
+
+From Workbench: WaveSmith as a sound file's default tool, or a click
+on WaveSmith's icon with a sound file's icon shift-clicked. A sound
+file's icon dropped on the open window is opened as well.
+
+From the Shell:
+
+  WaveSmith [FILE] <file> [PUBSCREEN <name>]
+
+  FILE       the sound file to open
+  PUBSCREEN  the public screen to open on (Workbench's otherwise)
+
+Without a file the window opens empty: Project > Open... picks one.
+
+The file is read a piece at a time and the window can be used at once.
+A long file's ends are read first, so that In and Out are there before
+the rest of the picture.
+
+@endnode
+
+@node Window "WaveSmith: The window"
+
+@{b}The window@{ub}
+
+From the top:
+
+  - the @{"overview" link Waveform}: the whole file, In and Out, a box
+    round the part the waveform shows
+  - the dotted weight bar: dragged down, the overview grows and the
+    waveform shrinks; Settings > Save settings keeps its place
+  - the @{"waveform" link Waveform}: the part of the file in view, with
+    a time ruler, one lane per channel
+  - the scroller, as long as the waveform
+  - the bar: the @{"deck" link Listening} and @{"Loop" link Listening};
+    the @{"flags" link Trimming} In and Out; a read-out of how long the
+    part kept is; @{"Trim..." link Trimming}; the
+    @{"lenses" link Waveform}: zoom out, zoom in, the whole file
+  - the status line, Cancel beside it
+
+The title bar names the file, its length, its rate and its channels.
+A * after the name: there are changes that are not saved yet.
+
+The status line says what WaveSmith found and did. While a file is
+read, decoded or saved it fills from the left, says the per cent and
+the time left, and Cancel (or Esc) calls the job off.
+
+@endnode
+
+@node Waveform "WaveSmith: The waveform"
+
+@{b}The waveform and the overview@{ub}
+
+The waveform shows a part of the file; the overview above it shows all
+of it. In both the lead-in and the run-out (outside In and Out) are
+shaded.
+
+@{b}Zooming@{ub}
+  The lenses at the bar's right: zoom out, zoom in and the whole file
+  (Right-Amiga -, + and 0). A handle's flag in the bar shows 3 seconds
+  around that handle (View > Go to In and Go to Out too). The mouse
+  wheel over the waveform zooms where the pointer is: away from you
+  in, towards you out. Up and Down zoom in and out too.
+
+@{b}Scrolling@{ub}
+  The scroller; Shift and the wheel; in the overview a click puts the
+  view there, and its box can be dragged. While the sound plays, the
+  view turns a page when the play head runs off it.
+
+@{b}The mouse in the waveform@{ub}
+  A click puts the play marker there (while playing, the sound jumps
+  there). A drag over the sound marks a part (View > Zoom to selection
+  fills the view with it). In and Out are dragged by their lines or
+  their flags, a marker by its line.
+
+View > dB scale? draws the level in decibels: quiet parts look bigger.
+
+@endnode
+
+@node Trimming "WaveSmith: Trimming"
+
+@{b}Trimming@{ub}
+
+When a file is open WaveSmith looks for the music: the lead-in's
+groove noise is measured and the music starts where it gets clearly
+louder (a record's crackle does not fool it). In is put half a second
+before the music, Out two seconds after its last sound, so a fade
+stays whole. The status line says what was found: the lead-in and the
+run-out, their clicks, the run-out groove's click every so often. No
+music found: In and Out stay at the file's ends.
+
+The handles move by:
+
+  - a drag of their line or flag, in the waveform or the overview
+  - the cursor keys, once a handle was dragged, nudged or picked by
+    its flag in the bar (see @{"Keys" link Keys})
+  - the Trim window: a time typed (m:ss.mmm) and Return, or [<] and
+    [>], a step that follows the zoom
+
+A handle let go snaps to the nearest zero crossing, so the cut does
+not click (Settings > Snap to zero crossings? turns that off).
+
+@{b}The flags in the bar@{ub}
+  In and Out, in the handles' colours: a click shows 3 seconds around
+  that handle, and the cursor keys move it from then on. The flag
+  pressed in is the handle last touched, in the waveform too.
+
+@{b}The Trim window@{ub}
+  Trim... in the bar, Edit > Trim... (Right-Amiga T) or a double-click
+  on a handle's flag in the waveform opens it. For In and for Out: the
+  time, [<] and [>], Listen, the fade's length (Effects > Fade in and
+  Fade out) and Show, which turns the view to the handle. Listen at In
+  plays 3 seconds from In, Listen at Out the last 3 seconds up to Out.
+  The window stays open beside the main one until its close gadget.
+
+The read-out in the bar, between the flags and Trim..., says how long
+the part kept is (an hour and more to the tenth of a second); its
+bubble says the fades too.
+
+How far before and after the music In and Out go is
+Settings > @{"Lead and tail..." link Settings}.
+
+@endnode
+
+@node Listening "WaveSmith: Listening"
+
+@{b}Listening@{ub}
+
+The deck in the bar:
+
+  <<       Rewind: the play marker to the stop before it -- a marker,
+           In, the start of the file
+  >        Play: the part marked, else from the play marker to Out
+  >>       Forward: the play marker to the next stop -- a marker, Out,
+           the end of the file
+  Stop     stops, the play marker back to the start
+  ||       Pause: the play held; again, it plays on
+  Loop     the key beside the deck, on: what plays starts again at its
+           end, until Stop -- the part marked, else In to Out (past
+           Out: to the end)
+
+Space is Play and Pause, Shift Space plays the part marked and only
+it. The Play menu has these too, Listen at In and Listen at Out, and
+Loop?, which is the window's Loop: switching one switches the other.
+Loop is off at every start.
+
+The play head runs through the overview and the waveform. Paused, it
+stays where it was, and Play goes on from there.
+
+@{b}Where it plays@{ub}
+  Settings > Play through: Automatic (the card, else AHI), The Prisma
+  card, or AHI. Automatic plays through AHI when there is no card, and
+  when another program has the card. Settings > AHI mode... picks the
+  mode and the rate in AHI's own requester; AHI's default is its own
+  preferences' mode. Settings > Save settings keeps both.
+
+@endnode
+
+@node Editing "WaveSmith: Editing"
+
+@{b}Editing@{ub}
+
+@{b}Cut out@{ub} (Right-Amiga X): drag over a part, then choose
+  Join     the parts on either side closed up, a thin mark where the
+           gap was
+  Silence  silence in its place, the length as it was
+
+@{b}Undo@{ub} (Right-Amiga Z) and @{b}Redo@{ub} (Right-Amiga Y): every
+cut, every move of In or Out and every marker change is a step. A run
+of nudges with a key held down is one step. Undone back to the file as
+it was opened, the * in the title goes.
+
+Edit > Select all and Select none mark the whole file or nothing.
+
+@{b}Split at the cursor@{ub} (Project): for Side.wav it writes Side-1.wav
+from In to the play marker and Side-2.wav from the play marker to Out,
+beside the file, the cuts in them. The file and the window stay as they were.
+
+Nothing is written into the file before @{"Save" link Saving}.
+
+@endnode
+
+@node Markers "WaveSmith: Markers"
+
+@{b}Markers@{ub}
+
+A marker says where a track starts.
+
+  Return or Enter   a marker at the play marker; tap it while the
+                    sound plays
+  a click on one    picks it; drag it to move it
+  Del               takes the picked one away
+  F1, F2            the play marker to the marker before or after
+                    it, In and Out the ends of the way; while the
+                    sound plays, it plays on from there (F1 within a
+                    second after a marker goes to the one before)
+
+The deck's Rewind and Forward stop at the markers too, and past In
+and Out at the file's start and end.
+
+Edit > Find tracks puts one at each track's start, found from the
+breaks between them; a long side is measured first (the status line
+fills, Cancel calls it off). Undo takes every change back.
+
+Project > Split at markers writes the tracks between In and Out
+beside the file: for Side.wav, Side-01.wav, Side-02.wav and on.
+
+Save writes the markers as a cue sheet beside the file, Side.cue, and
+they come back from it when the file is opened again. SplitTracks
+CUE Side.cue cuts the side at them too.
+
+@endnode
+
+@node Saving "WaveSmith: Saving"
+
+@{b}Saving@{ub}
+
+Save (Right-Amiga S) writes the file anew without the shaded parts and
+the parts cut out. The status line counts the per cent; Cancel or Esc
+calls it off, and the file stays as it was. Saved, the file is read
+again and Undo starts anew.
+
+Save as... (Right-Amiga A) writes a new file, and WaveSmith works on
+that one from then on; the original stays as it was. A name that is
+there is asked about first.
+
+A file that is not a WAV (FLAC, MP3, ...) is decoded first into a work
+file beside it, Side.flac.wsmith.wav for Side.flac, which goes when the
+file is closed. Save asks for a new name then, Side-trim.wav filled
+in.
+
+What Save writes beside Side.wav:
+
+  Side.wav.bak   the old file, with Settings > Keep a backup? on
+                 (and Side.prl.bak)
+  Side.prl       PrismaRec's level map, when there is one, cut as
+                 the sound was
+  Side.cue       the cue sheet, when there are markers
+  Side.wav.info  for a new file, with Settings > Create icons? on
+
+Project > Open next opens the next sound file in the same drawer, by
+name: a side's tracks trimmed one after the other.
+
+Project > Revert reads the file again, the changes gone. Quitting or
+opening another file with changes not saved asks first: Save, Discard
+or Cancel.
+
+@endnode
+
+@node Settings "WaveSmith: Settings"
+
+@{b}Settings@{ub}
+
+@{b}Play through@{ub}: Automatic, The Prisma card or AHI; see
+@{"Listening" link Listening}.
+
+@{b}AHI mode...@{ub}: the mode and the rate WaveSmith plays through AHI
+in.
+
+@{b}Snap to zero crossings?@{ub} (on): a handle let go moves to the
+nearest zero crossing.
+
+@{b}Lead and tail...@{ub}: how far In goes before the music (0 to 10,000
+ms, 500 at first) and Out after it (0 to 30,000 ms, 2000 at first).
+Slide or type the milliseconds; the seconds beside them follow. Use
+moves In and Out to the new places while nothing was changed yet;
+otherwise the next file gets them.
+
+@{b}Keep a backup?@{ub} (off): Save keeps the old file, Side.wav as
+Side.wav.bak.
+
+@{b}Create icons?@{ub} (on): every new file gets the system's icon for a
+sound.
+
+@{b}Save settings@{ub}: these, and the weight bar's place. They are read
+from WaveSmith.prefs beside the program when there is one, and saved
+back there; else from ENV: and saved to ENVARC: and ENV:.
+
+@endnode
+
+@node Menus "WaveSmith: Menus"
+
+@{b}Menus@{ub}
+
+  Project   Open... (O), Open next, Save (S), Save as... (A),
+            Split at the cursor..., Split at markers..., Revert,
+            Help..., About... (?), Quit (Q)
+  Edit      Undo (Z), Redo (Y), Cut out... (X), Select all,
+            Select none, Add marker (Return), Remove marker (Del),
+            Find tracks, Trim... (T)
+  View      Zoom in (+), Zoom out (-), Show all (0),
+            Zoom to selection (Shift Z), Go to In, Go to Out,
+            Previous marker (F1), Next marker (F2), dB scale?
+  Effects   Fade in (F), Fade out (Shift F), Gain... (G), Normalise,
+            Remove fades and gain
+  Play      Play/Pause (Space), Play selection (Shift Space), Stop,
+            Listen at In, Listen at Out, Loop?
+  Settings  Play through, AHI mode..., Snap to zero crossings?,
+            Lead and tail..., Keep a backup?, Create icons?,
+            Save settings
+
+The letters are Right-Amiga keys.
+
+@endnode
+
+@node Keys "WaveSmith: Keys"
+
+@{b}Keys@{ub}
+
+  Space             Play, Pause
+  Shift Space       play the part marked
+  Return, Enter     a marker at the play marker
+  Del               the picked marker away
+  F1, F2            the marker before, after the play marker
+  Esc               call off reading, decoding or saving
+  Help              this manual, at the page about what is under
+                    the pointer
+  Left, Right       the play marker a column of the view on or back;
+                    with Shift a page, with Ctrl to the start or the
+                    end
+  Up, Down          zoom in, zoom out
+
+Once In or Out was dragged or nudged, Left and Right move that handle
+instead, until the next click on the sound. Held down, the moves are
+one step for Undo.
+
+The menus' keys: see @{"Menus" link Menus}.
+
+@endnode
+
+@node Messages "WaveSmith: Messages"
+
+@{b}When something goes wrong@{ub}
+
+@{b}... is no 16-bit WAV: other formats need prismadsp.library 1.1@{ub} -
+install the driver package; the card decodes them.
+
+@{b}Only 16-bit PCM WAV files, mono or stereo@{ub} - other WAV files
+(8 or 24 bits, more channels) are not read yet.
+
+@{b}The card is in use by ...@{ub} - a player holds the card: stop it,
+or play through AHI (Settings > Play through).
+
+@{b}Nothing to play through@{ub} - neither prisma.library 3 nor
+ahi.device 4 is installed.
+
+@{b}AHI's mode is not there or in use@{ub} - pick another one with
+Settings > AHI mode...
+
+@{b}Saving failed: DOS error ...@{ub} - the file is as it was.
+
+@{b}Saving failed half-way@{ub} - the trimmed sound is kept, Side.wav's
+as Side.wav.wsmith; the message says where the original is.
+
+@{b}Too many cuts: save first@{ub} - Save, then go on cutting.
+
+@endnode
+
+@node History "WaveSmith: History"
+
+@{b}History@{ub}
+
+1.0 (15.11.2026) - the first public release: a package whose Installer
+puts WaveSmith into a drawer of its own; free software under the GNU
+Lesser General Public License; the About window says what WaveSmith
+does.
+
+0.4 (6.11.2026) - the new name (it was PrismaEdit); one bar under the
+sound: the deck, Loop, the flags In and Out, the length, Trim... and the
+lenses; the Trim window; F1 and F2 from marker to marker; the play
+head a sprite, steady on slow machines; fades and gain drawn in the
+lanes; pages and new views filled in by pieces, the controls answered
+first (an A2000 too); without a card and AHI WaveSmith says so; the
+GlowIcon and the About picture by Martin "Mason" Merz.
+
+0.3 (27.10.2026) - playing through AHI, German, this manual and the Help
+key, the Effects menu: Fade in, Fade out, fades at In and Out, Gain...,
+Normalise, Remove fades and gain.
+
+0.2 (27.10.2026) - playing through the card, files other than WAV
+decoded on the card, the mouse wheel, Cut out, Undo and Redo, Split at
+the cursor, the weight bar, the Settings menu, Save as, the Play menu
+with Loop, the cursor keys, markers, Find tracks, Split at markers and
+cue sheets.
+
+0.1 (26.10.2026) - the first version: a 16-bit WAV opened, In and Out
+suggested, the handles dragged, nudged or typed, Save and Next.
+
+@endnode
+
+@node Thanks "WaveSmith: Thanks"
+
+@{b}Thanks@{ub}
+
+To Martin "Mason" Merz, for WaveSmith's icons and the picture in its
+About window.
+
+To Thomas Lübker, for AmiAgent, which let WaveSmith be tested on real
+Amigas straight from the development machine.
+
+@endnode
+
+@node Licence "WaveSmith: Licence"
+
+@{b}Licence@{ub}
+
+WaveSmith is Copyright (C) 2026 Marcus Gerards. It is free software:
+it may be passed on and changed under the terms of the GNU Lesser
+General Public License as published by the Free Software Foundation,
+version 2.1 or (at your option) any later version. It comes WITHOUT
+ANY WARRANTY.
+
+The file LICENSE in WaveSmith's archive says what the licence covers,
+COPYING.LIB holds its text. Mason's icons and picture and AmigaOS 3.2's
+own icons are not covered: they are included with permission.
+
+The source is at https://github.com/bubbob42/WaveSmith
+
+@endnode

@@ -1,0 +1,67 @@
+##base _PrismaBase
+##bias 30
+*
+* fd/prisma_lib.fd
+*
+* Function definitions for prisma.library
+*
+##public
+Prisma_ObtainCard()()
+Prisma_ReleaseCard()()
+Prisma_CreatePlayer(msgport)(a1)
+Prisma_DeletePlayer(pplayer)(a1)
+Prisma_TerminatePlayer(pplayer)(a1)
+Prisma_Play(pplayer,fh)(a1,d1)
+Prisma_Stop(pplayer)(a1)
+Prisma_Pause(pplayer)(a1)
+Prisma_SetVolume(pplayer,volume)(a1,d1)
+Prisma_SetPanning(pplayer,panning)(a1,d1)
+Prisma_SetSignal(pplayer,task,mask)(a1,a2,d1)
+Prisma_CreateBuffer(pplayer,size)(a1,d1)
+Prisma_QueueBuffer(pplayer,buffer)(a1,a2)
+Prisma_GetFreeBuffer(pplayer)(a1)
+Prisma_AddBuffer(pplayer,buffer)(a1,a2)
+Prisma_GetPlayerState(pplayer)(a1)
+Prisma_SetEqualizer(pplayer,pequalizer)(a1,a2)
+Prisma_EnableEqualizer(pplayer,enable)(a1,d1)
+*
+##private
+Prisma_SetInputSource(card,src)(a1,d1)
+Prisma_SetClockportInt(card,irq)(a1,d1)
+*
+Prisma_SetMixerParams(card,params)(a1,d1)
+Prisma_SetMixerGain(card,gain)(a1,d1)
+Prisma_EnableMixer(card,enable)(a1,d1)
+*
+Prisma_EnableVUMeter(card,enable)(a1,d1)
+*
+* Added after the 2019 release
+*
+##public
+Prisma_GetPlayerAttr(pplayer,attr)(a1,d1)
+Prisma_SetPlayerAttr(pplayer,attr,value)(a1,d1,d2)
+##private
+Prisma_ReadRegister(card,reg)(a1,d1)
+Prisma_WriteRegister(card,reg,value)(a1,d1,d2)
+Prisma_ReadMemory(card,addr)(a1,d1)
+Prisma_WriteMemory(card,addr,value)(a1,d1,d2)
+##public
+Prisma_GetCardAttr(card,attr)(a1,d1)
+Prisma_Record(pplayer,fh)(a1,d1)
+Prisma_QueueRecordBuffer(pplayer,buffer)(a1,a2)
+Prisma_GetRecordBuffer(pplayer)(a1)
+Prisma_SetCardAttr(card,attr,value)(a1,d1,d2)
+*
+* Added in 3.1: low-level chip access (prismadsp.library)
+*
+##private
+Prisma_LockChip(card)(a1)
+Prisma_UnlockChip(card)(a1)
+Prisma_ReadWRAM(card,addr,buffer,count)(a1,d1,a2,d2)
+Prisma_WriteWRAM(card,addr,buffer,count)(a1,d1,a2,d2)
+Prisma_WriteSDI(card,buffer,count)(a1,a2,d1)
+*
+* Added in 3.2: the chip reset (prismadsp.library)
+*
+Prisma_ResetChip(card)(a1)
+##end

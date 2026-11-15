@@ -1,0 +1,30 @@
+; EditHelp -- WaveSmith's manual (the Help key, Project > Help...) in
+; FS-UAE under MuForce and MuGuardianAngel (DEV:mutools), on PAL hires
+; 640x256. The test disk speaks German: the German manual opens
+; (DEV:sasc/Help/deutsch/WaveSmith.guide, beside the build); WaveSmith's
+; own words stay English (its catalog is not beside the test build).
+; DEV:Test/EditHelp.rexx: the page for what is under the pointer, the
+; manual's window titled as that page, Project > Help..., Quit closing
+; the manual with the window.
+;
+;   gmake autotest T=EditHelp W=pal LIMIT=300
+FailAt 21
+Wait 8
+Execute DEV:mutools
+Delete >NIL: DEV:Test/help.trace DEV:Test/Edit/Hilfe.wav DEV:Test/Edit/Hilfe.prl DEV:Test/edit-help-#? ENV:WaveSmith.prefs QUIET
+Echo >DEV:Test/auto.log "EditHelp"
+Version >>DEV:Test/auto.log DEV:sasc/WaveSmith FULL
+Version >>DEV:Test/auto.log LIBS:amigaguide.library
+Copy >NIL: DEV:Test/Edit/Single.wav DEV:Test/Edit/Hilfe.wav
+SetEnv WaveSmithTrace DEV:Test/help.trace
+Run >NIL: DEV:sasc/WaveSmith DEV:Test/Edit/Hilfe.wav
+Wait 10
+RX DEV:Test/EditHelp.rexx
+Wait 3
+Echo >>DEV:Test/auto.log "still running:"
+Status >>DEV:Test/auto.log COMMAND=DEV:sasc/WaveSmith
+Echo >>DEV:Test/auto.log "the trace:"
+Type DEV:Test/help.trace >>DEV:Test/auto.log
+UnSetEnv WaveSmithTrace
+Delete >NIL: DEV:Test/Edit/Hilfe.wav DEV:Test/Edit/Hilfe.prl QUIET
+Echo >DEV:Test/AutoDone done

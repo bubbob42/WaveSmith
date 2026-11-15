@@ -1,0 +1,13 @@
+##base _PrismaDSPBase
+##bias 30
+*
+* fd/prismadsp_lib.fd
+*
+* Function definitions for prismadsp.library
+*
+##public
+PDSP_EncodeFileA(tags)(a0)
+PDSP_AbortJob(job)(a0)
+PDSP_GetJobAttr(job,attr)(a0,d0)
+PDSP_DeleteJob(job)(a0)
+##end

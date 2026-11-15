@@ -1,0 +1,151 @@
+.KEY DONE/A,TAG/A
+.BRA {
+.KET }
+; InstallClicks -- the clicks for T=Install, in a process of its own,
+; so that the Installer runs in the FOREGROUND and its return code can be
+; read: files on disk cannot tell a finished installation from one that
+; stopped on its last page (Herald's lesson).
+;
+; MEASURED on the rtg32 autotest screen with Herald's installer, the same
+; Installer on the same screen. Its window swaps two page shapes:
+;
+;   a page with a button GRID  Proceed x 80..317, y 320..339 on row 1,
+;                              About and Help on row 2 (y 339..358, About
+;                              x 80..317, Help 322..564)
+;   a page with ONE button     x 201..438, y 339..358: the closing page
+;                              and every error page
+;
+;   (198, 330)  Proceed on a grid page; in the text of a one-button page
+;   (320, 348)  the one button; on a grid page the GAP between About and
+;               Help, which does nothing
+;
+; So every round clicks both and the page decides which one lands. A
+; (message) page has a third shape (Proceed where About is) that neither
+; point reaches -- which is why install/Install puts every notice a novice
+; must see on its closing page and shows no (message) to a novice.
+;
+; (Measured with the Prisma Megamix package's Installer, where this script
+; comes from: the same Installer, the same rtg32 screen.)
+;
+; Rounds stop once the DONE file exists (the test writes it when the
+; Installer has returned): later clicks would land on whatever Workbench
+; shows. ONE DONE FILE PER RUN: with one for both, the first run's clicker
+; was still finishing its rounds when the second Installer came up, and
+; clicked on its pages. Every round grabs the screen before each of its
+; two clicks (install-<TAG>-<round>.ppm and -<round>b.ppm): the account of
+; every page, and of the one a run stuck on.
+;
+;   Run Execute DEV:Test/InstallClicks RAM:InstallDone1 a
+Wait 6
+If NOT EXISTS {DONE}
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-01.ppm
+  DEV:Test/InputPoke X=198 Y=330 CLICKS=1
+  Wait 3
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-01b.ppm
+  DEV:Test/InputPoke X=320 Y=348 CLICKS=1
+  Wait 3
+EndIf
+If NOT EXISTS {DONE}
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-02.ppm
+  DEV:Test/InputPoke X=198 Y=330 CLICKS=1
+  Wait 3
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-02b.ppm
+  DEV:Test/InputPoke X=320 Y=348 CLICKS=1
+  Wait 3
+EndIf
+If NOT EXISTS {DONE}
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-03.ppm
+  DEV:Test/InputPoke X=198 Y=330 CLICKS=1
+  Wait 3
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-03b.ppm
+  DEV:Test/InputPoke X=320 Y=348 CLICKS=1
+  Wait 3
+EndIf
+If NOT EXISTS {DONE}
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-04.ppm
+  DEV:Test/InputPoke X=198 Y=330 CLICKS=1
+  Wait 3
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-04b.ppm
+  DEV:Test/InputPoke X=320 Y=348 CLICKS=1
+  Wait 3
+EndIf
+If NOT EXISTS {DONE}
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-05.ppm
+  DEV:Test/InputPoke X=198 Y=330 CLICKS=1
+  Wait 3
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-05b.ppm
+  DEV:Test/InputPoke X=320 Y=348 CLICKS=1
+  Wait 3
+EndIf
+If NOT EXISTS {DONE}
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-06.ppm
+  DEV:Test/InputPoke X=198 Y=330 CLICKS=1
+  Wait 3
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-06b.ppm
+  DEV:Test/InputPoke X=320 Y=348 CLICKS=1
+  Wait 3
+EndIf
+If NOT EXISTS {DONE}
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-07.ppm
+  DEV:Test/InputPoke X=198 Y=330 CLICKS=1
+  Wait 3
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-07b.ppm
+  DEV:Test/InputPoke X=320 Y=348 CLICKS=1
+  Wait 3
+EndIf
+If NOT EXISTS {DONE}
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-08.ppm
+  DEV:Test/InputPoke X=198 Y=330 CLICKS=1
+  Wait 3
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-08b.ppm
+  DEV:Test/InputPoke X=320 Y=348 CLICKS=1
+  Wait 3
+EndIf
+If NOT EXISTS {DONE}
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-09.ppm
+  DEV:Test/InputPoke X=198 Y=330 CLICKS=1
+  Wait 3
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-09b.ppm
+  DEV:Test/InputPoke X=320 Y=348 CLICKS=1
+  Wait 3
+EndIf
+If NOT EXISTS {DONE}
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-10.ppm
+  DEV:Test/InputPoke X=198 Y=330 CLICKS=1
+  Wait 3
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-10b.ppm
+  DEV:Test/InputPoke X=320 Y=348 CLICKS=1
+  Wait 3
+EndIf
+If NOT EXISTS {DONE}
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-11.ppm
+  DEV:Test/InputPoke X=198 Y=330 CLICKS=1
+  Wait 3
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-11b.ppm
+  DEV:Test/InputPoke X=320 Y=348 CLICKS=1
+  Wait 3
+EndIf
+If NOT EXISTS {DONE}
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-12.ppm
+  DEV:Test/InputPoke X=198 Y=330 CLICKS=1
+  Wait 3
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-12b.ppm
+  DEV:Test/InputPoke X=320 Y=348 CLICKS=1
+  Wait 3
+EndIf
+If NOT EXISTS {DONE}
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-13.ppm
+  DEV:Test/InputPoke X=198 Y=330 CLICKS=1
+  Wait 3
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-13b.ppm
+  DEV:Test/InputPoke X=320 Y=348 CLICKS=1
+  Wait 3
+EndIf
+If NOT EXISTS {DONE}
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-14.ppm
+  DEV:Test/InputPoke X=198 Y=330 CLICKS=1
+  Wait 3
+  DEV:Test/Grab 0 0 640 480 DEV:Test/install-{TAG}-14b.ppm
+  DEV:Test/InputPoke X=320 Y=348 CLICKS=1
+  Wait 3
+EndIf

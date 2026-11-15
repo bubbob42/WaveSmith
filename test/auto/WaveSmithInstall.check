@@ -1,0 +1,31 @@
+#!/bin/sh
+# WaveSmithInstall.check -- run on the host after the autotest (the
+# GNUmakefile's autotest target runs test/auto/<T>.check when there is
+# one): what the Installer put into SYS:Tools, copied back to
+# dist/Test/Installed, against the package it came from (dist/Release),
+# byte for byte. A novice gets the GlowIcons: every icon that
+# Files/Icons/Glow/WaveSmith holds is installed from there, the drawer's
+# is Files/Icons/Glow/WaveSmithDrawer.info; everything else comes from
+# Files/WaveSmith.
+P=dist/Release/WaveSmith/Files
+I=dist/Test/Installed
+ok=1
+same() {
+    if cmp -s "$1" "$2"; then echo "ok   $3"; else echo "FAIL $3 ($2 is not $1)"; ok=0; fi
+}
+test -d "$I" || { echo "FAIL nothing installed (no $I)"; exit 1; }
+same "$P/WaveSmith/WaveSmith" "$I/WaveSmith" "the program"
+same "$P/Icons/Glow/WaveSmithDrawer.info" "$I.info" "the drawer's GlowIcon"
+for f in Help/english/WaveSmith.guide Help/deutsch/WaveSmith.guide Catalogs/deutsch/WaveSmith.catalog; do
+    same "$P/WaveSmith/$f" "$I/$f" "$f"
+done
+g=0
+for f in `cd "$P/Icons/Glow/WaveSmith" && find . -type f -name '*.info' | sed 's#^\./##' | sort`; do
+    same "$P/Icons/Glow/WaveSmith/$f" "$I/$f" "$f (GlowIcon)"
+    g=`expr $g + 1`
+done
+test $g -ge 6 || { echo "FAIL only $g GlowIcons in the set"; ok=0; }
+n=`cd "$I" && find . -type f ! -name '*.uaem' | wc -l | tr -d ' '`
+m=`cd "$P/WaveSmith" && find . -type f ! -name '*.uaem' | wc -l | tr -d ' '`
+if [ "$n" = "$m" ]; then echo "ok   $n files, as the package has"; else echo "FAIL $n files installed, the package has $m"; ok=0; fi
+test $ok -eq 1

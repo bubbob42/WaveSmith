@@ -1,0 +1,32 @@
+; EditAhi -- WaveSmith playing through AHI in FS-UAE under MuForce and
+; MuGuardianAngel (DEV:mutools), on PAL hires 640x256: no card (the test
+; disk has no prisma.library), no simulated player; the settings file says
+; PLAY=AHI with Paula's 8-bit stereo mode (0x20009) at 22050 Hz.
+; DEV:Test/EditAhi.rexx: the settings read, Listen at In through AHI (the
+; play head moving, its end by itself), Loop, Play through / Automatic
+; falling back to AHI, Quit.
+;
+;   gmake autotest T=EditAhi W=pal LIMIT=300
+FailAt 21
+Wait 8
+Execute DEV:mutools
+Delete >NIL: DEV:Test/ahi.trace DEV:Test/Edit/Ahi.wav DEV:Test/Edit/Ahi.prl ENVARC:WaveSmith.prefs QUIET
+Echo >DEV:Test/auto.log "EditAhi"
+Version >>DEV:Test/auto.log DEV:sasc/WaveSmith FULL
+Version >>DEV:Test/auto.log DEVS:ahi.device
+Copy >NIL: DEV:Test/Edit/Single.wav DEV:Test/Edit/Ahi.wav
+Echo >ENV:WaveSmith.prefs "PLAY=AHI"
+Echo >>ENV:WaveSmith.prefs "AHIMODE=131081"
+Echo >>ENV:WaveSmith.prefs "AHIFREQ=22050"
+SetEnv WaveSmithTrace DEV:Test/ahi.trace
+Run >NIL: DEV:sasc/WaveSmith DEV:Test/Edit/Ahi.wav
+Wait 10
+RX DEV:Test/EditAhi.rexx
+Wait 3
+Echo >>DEV:Test/auto.log "still running:"
+Status >>DEV:Test/auto.log COMMAND=DEV:sasc/WaveSmith
+Echo >>DEV:Test/auto.log "the trace:"
+Type DEV:Test/ahi.trace >>DEV:Test/auto.log
+UnSetEnv WaveSmithTrace
+Delete >NIL: ENV:WaveSmith.prefs QUIET
+Echo >DEV:Test/AutoDone done

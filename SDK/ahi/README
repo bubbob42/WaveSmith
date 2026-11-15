@@ -1,0 +1,19 @@
+AHI 4.18 developer headers (Aminet dev/misc/ahidev_4.18.lha, Martin Blom,
+1994-1997; freely distributable with AHI), unchanged:
+
+  include/devices/ahi.h, ahi.i        ahi.device definitions 4.2
+  include/libraries/ahi_sub.h, .i     [driver].audio definitions 4.1
+  include/fd/ahi_sub_lib.fd           the driver's vector order
+  include/fd/ahi_lib.fd               ahi.device's functions
+  include/clib/ahi_protos.h           ahi.device prototypes
+  include/pragmas/ahi_pragmas.h       SAS/C pragmas
+
+Added here (not in the kit):
+  include/inline/ahi.h                GCC inlines: fd2pragma -s 40 from the
+                                      fd and clib files above
+  include/proto/ahi.h                 picks the pragmas or the inlines
+
+The driver (PrismaAHI/) is written against this 4.18 API only: AHI 6 runs
+V4 drivers, but nothing that exists only in AHI 5/6 may be used (see
+Documentation/Analysis-2026-09.md, section 6). Needed to build
+prisma.audio, the DEVS:AudioModes/PRISMA mode file and AHIBench.

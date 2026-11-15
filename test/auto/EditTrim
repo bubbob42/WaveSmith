@@ -1,0 +1,71 @@
+; EditTrim -- WaveSmith 0.1 in FS-UAE under MuForce and MuGuardianAngel
+; (DEV:mutools), on PAL hires 640x256 at Topaz 8 (W=pal: the window must
+; fit there). First a copy, Ends.wav, read ends first (WaveSmithEnds 10:
+; its first and last 10 s, then the rest): DEV:Test/EditEnds.rexx wants
+; the whole file's suggestion before the reading's end and saves at once
+; (edit-p). Then DEV:Test/Edit/Single.wav (tools/make_edit_single.py: a
+; single's side, 40 s, a lead-in with the needle's thump and clicks, a
+; fade-out, the run-out groove's click every 1.8 s, a LIST chunk after
+; the samples) is copied to Trim.wav and opened; DEV:Test/EditTrim.rexx
+; works the window at the places WaveSmith's trace gives (A suggestion,
+; B At In, C In dragged and snapped, D All and a Save that cannot write
+; -- the handles must stay --, E Save, P Play on the simulated player
+; (WaveSmithSimPlay: the card's time, no card) with the view following
+; the play head, F Quit) and grabs each step
+; (DEV:Test/edit-<step>.ppm). After the run, on the host:
+;   python3 tools/make_edit_single.py --check dist/Test/Edit Trim --trace dist/Test/edit.trace
+;   python3 tools/make_edit_single.py --check dist/Test/Edit TrimAs --trace dist/Test/edit.trace
+;   python3 tools/make_edit_single.py --check dist/Test/Edit Ends
+; (Trim is saved twice, E and G -- G's with L's cut and M's silence in it:
+; the trace's saves replayed, version after version, samples and map exact)
+; holds Trim.wav (and Ends.wav) against Single.wav: sizes true, its samples a stretch of
+; the original's byte for byte, In and Out where they belong, LIST kept,
+; and Trim.prl (Single.prl's copy beside it) cut as the take was.
+;
+;   gmake autotest T=EditTrim W=pal LIMIT=780
+FailAt 21
+Wait 8
+Execute DEV:mutools
+Delete >NIL: DEV:Test/edit.trace DEV:Test/Edit/Trim.wav DEV:Test/Edit/Trim.prl DEV:Test/Edit/Trim.wav.wsmith.wav DEV:Test/Edit/WaveSmith-#?.tmp QUIET
+Delete >NIL: DEV:Test/Edit/Trim-1.wav DEV:Test/Edit/Trim-1.prl DEV:Test/Edit/Trim-2.wav DEV:Test/Edit/Trim-2.prl QUIET
+Delete >NIL: DEV:Test/ends.trace DEV:Test/Edit/Ends.wav DEV:Test/Edit/Ends.prl QUIET
+; Create icons? and Keep a backup? (T): no icon, backup or settings file of a run before
+Delete >NIL: DEV:Test/Edit/Trim.wav.info DEV:Test/Edit/Trim-1.wav.info DEV:Test/Edit/Trim-2.wav.info DEV:Test/Edit/Ends.wav.info QUIET
+Delete >NIL: DEV:Test/Edit/Trim.wav.bak DEV:Test/Edit/Trim.prl.bak ENV:WaveSmith.prefs ENVARC:WaveSmith.prefs DEV:sasc/WaveSmith.prefs QUIET
+; Save as (Y): TrimAs.wav and what goes with it
+Delete >NIL: DEV:Test/Edit/TrimAs.wav DEV:Test/Edit/TrimAs.prl DEV:Test/Edit/TrimAs.wav.info DEV:Test/Edit/TrimAs.wav.bak DEV:Test/Edit/TrimAs.prl.bak QUIET
+Echo >DEV:Test/auto.log "EditTrim"
+SetEnv WaveSmithSimPlay 1
+SetEnv WaveSmithSlowSave 1
+Version >>DEV:Test/auto.log DEV:sasc/WaveSmith FULL
+Copy >NIL: DEV:Test/Edit/Single.wav DEV:Test/Edit/Ends.wav
+Copy >NIL: DEV:Test/Edit/Single.prl DEV:Test/Edit/Ends.prl
+SetEnv WaveSmithTrace DEV:Test/ends.trace
+SetEnv WaveSmithEnds 10
+Run >NIL: DEV:sasc/WaveSmith DEV:Test/Edit/Ends.wav
+RX DEV:Test/EditEnds.rexx
+Wait 3
+UnSetEnv WaveSmithEnds
+Echo >>DEV:Test/auto.log "the ends' trace:"
+Type DEV:Test/ends.trace >>DEV:Test/auto.log
+SetEnv WaveSmithTrace DEV:Test/edit.trace
+Copy >NIL: DEV:Test/Edit/Single.wav DEV:Test/Edit/Trim.wav
+Copy >NIL: DEV:Test/Edit/Single.prl DEV:Test/Edit/Trim.prl
+Run >NIL: DEV:sasc/WaveSmith DEV:Test/Edit/Trim.wav
+Wait 25
+DEV:Test/ScreenInfo >>DEV:Test/auto.log
+DEV:Test/InputPoke WIN=WaveSmith >>DEV:Test/auto.log
+RX DEV:Test/EditTrim.rexx
+Wait 3
+Echo >>DEV:Test/auto.log "still running:"
+Status >>DEV:Test/auto.log COMMAND=DEV:sasc/WaveSmith
+Echo >>DEV:Test/auto.log "the trace:"
+Type DEV:Test/edit.trace >>DEV:Test/auto.log
+List >>DEV:Test/auto.log DEV:Test/Edit LFORMAT "  %N %L"
+UnSetEnv WaveSmithTrace
+Echo >>DEV:Test/auto.log "the settings saved:"
+Type >>DEV:Test/auto.log ENVARC:WaveSmith.prefs
+Delete >NIL: ENV:WaveSmith.prefs ENVARC:WaveSmith.prefs QUIET
+UnSetEnv WaveSmithSimPlay
+UnSetEnv WaveSmithSlowSave
+Echo >DEV:Test/AutoDone done

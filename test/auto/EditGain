@@ -1,0 +1,37 @@
+; EditGain -- WaveSmith's Effects menu, Gain..., Normalise and Remove
+; fades and gain, in FS-UAE under MuForce and MuGuardianAngel
+; (DEV:mutools), on PAL hires 640x256: a copy of the test single, Gain.wav
+; (its level map beside it as Gain.prl), the settings PLAY=AHI (Paula's
+; 8-bit stereo at 22050 Hz: Listen in the Gain window) and NORMALISE=20
+; (-2.0 dB), worked by DEV:Test/EditGain.rexx at the places the trace
+; (DEV:Test/gain.trace) gives. After the run, on the host:
+;   python3 tools/make_edit_single.py --check dist/Test/Edit Gain --trace dist/Test/gain.trace
+; replays the save at its levels: every sample of the gained parts as
+; WaveSmith's sums make it, the rest byte for byte; and
+;   python3 tools/check_normpeak.py dist/Test/Edit/Gain.wav dist/Test/gain.trace -20
+; holds the normalised part's peak within 0.1 dB under -2.0 dB.
+;
+;   gmake autotest T=EditGain W=pal LIMIT=360
+FailAt 21
+Wait 8
+Execute DEV:mutools
+Delete >NIL: DEV:Test/gain.trace DEV:Test/Edit/Gain.wav DEV:Test/Edit/Gain.prl DEV:Test/Edit/Gain.wav.info ENV:WaveSmith.prefs ENVARC:WaveSmith.prefs QUIET
+Delete >NIL: DEV:Test/edit-gain-#? QUIET
+Echo >DEV:Test/auto.log "EditGain"
+Version >>DEV:Test/auto.log DEV:sasc/WaveSmith FULL
+Copy >NIL: DEV:Test/Edit/Single.wav DEV:Test/Edit/Gain.wav
+Copy >NIL: DEV:Test/Edit/Single.prl DEV:Test/Edit/Gain.prl
+Echo >ENV:WaveSmith.prefs "PLAY=AHI"
+Echo >>ENV:WaveSmith.prefs "AHIMODE=131081"
+Echo >>ENV:WaveSmith.prefs "AHIFREQ=22050"
+Echo >>ENV:WaveSmith.prefs "NORMALISE=20"
+SetEnv WaveSmithTrace DEV:Test/gain.trace
+Run >NIL: DEV:sasc/WaveSmith DEV:Test/Edit/Gain.wav
+Wait 10
+RX DEV:Test/EditGain.rexx
+Wait 3
+Echo >>DEV:Test/auto.log "still running:"
+Status >>DEV:Test/auto.log COMMAND=DEV:sasc/WaveSmith
+UnSetEnv WaveSmithTrace
+Delete >NIL: ENV:WaveSmith.prefs QUIET
+Echo >DEV:Test/AutoDone done

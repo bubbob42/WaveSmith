@@ -1,0 +1,739 @@
+## version $VER: WaveSmith.catalog 59219.0 (6.11.2026)
+## language deutsch
+## codeset 0
+;
+; Translation of WaveSmith. Each entry is the id line followed by the
+; translated string on the NEXT line. Both lines are required,
+; and the ORDER MUST NOT CHANGE -- catalog ids are implicit.
+;
+; Values start as the English text: overwrite each one. A value
+; left identical to English is omitted from the built .catalog,
+; which is correct and harmless (the built-in default is used).
+;
+; Validate with:  tools/gen_catalog.py --name WaveSmith --prefix WS check catalogs/deutsch/WaveSmith.ct
+;
+; The '## version' line and the WS_SIG_CATALOG entry below are AUTO-MANAGED
+; by `gen_catalog.py --name WaveSmith --prefix WS gen` -- do not translate or edit them.
+
+; run-time catalog signature (id 0) -- auto-managed by
+; gen_catalog.py 'gen'; do not translate or remove.
+WS_SIG_CATALOG
+WSCAT-59219
+
+WS_TXT_TITLE
+WaveSmith
+
+WS_TXT_TITLE_FILE
+WaveSmith: %s  %s  %ld Hz %s
+
+WS_TXT_MONO
+mono
+
+WS_TXT_STEREO
+stereo
+
+WS_TXT_IN
+In
+
+WS_TXT_OUT
+Out
+
+WS_TXT_LISTEN
+Anhören
+
+WS_TXT_LENGTH
+Länge %s
+
+WS_TXT_CANCEL
+Abbrechen
+
+WS_TXT_ZOOMIN
+Zoom +
+
+WS_TXT_ZOOMOUT
+Zoom -
+
+WS_TXT_ALL
+Alles
+
+WS_TXT_NEXT
+Nächste
+
+WS_TXT_LOOP
+Schleife
+
+WS_TXT_HINT_IN
+Wo der behaltene Teil beginnt: eine Zeit eingeben (m:ss.mmm)
+
+WS_TXT_HINT_OUT
+Wo der behaltene Teil endet: eine Zeit eingeben (m:ss.mmm)
+
+WS_TXT_HINT_BACK
+Einen Schritt zurück (der Schritt folgt dem Zoom)
+
+WS_TXT_HINT_ON
+Einen Schritt vor (der Schritt folgt dem Zoom)
+
+WS_TXT_HINT_INLISTEN
+Ab In anhören, 3 s
+
+WS_TXT_HINT_OUTLISTEN
+Die letzten 3 s vor Out anhören
+
+WS_TXT_HINT_CANCEL
+Das Lesen, Dekodieren oder Sichern abbrechen (auch Esc)
+
+WS_TXT_HINT_ZOOMIN
+Hineinzoomen (Rechts-Amiga +, oder das Mausrad)
+
+WS_TXT_HINT_ZOOMOUT
+Herauszoomen (Rechts-Amiga -)
+
+WS_TXT_HINT_ALL
+Die ganze Datei zeigen (Rechts-Amiga 0)
+
+WS_TXT_HINT_ATIN
+3 s um In zeigen
+
+WS_TXT_HINT_ATOUT
+3 s um Out zeigen
+
+WS_TXT_HINT_LOOP
+Immer wieder: den markierten Teil, sonst In bis Out (auch Wiedergabe > Schleife?)
+
+WS_TXT_ST_NOFILE
+Öffnen Sie eine Klangdatei (Projekt/Öffnen...): WAV, AIFF, FLAC, MP3, Ogg, AAC
+
+WS_TXT_ST_NOFILE_WAV
+Öffnen Sie eine WAV-Datei (Projekt/Öffnen...); andere brauchen prismadsp.library
+
+WS_TXT_ST_READING
+%s wird gelesen: %ld %%%s
+
+WS_TXT_ST_FOUND
+Gefunden: Einlauf %s; Auslauf %s
+
+WS_TXT_ST_PART
+%s s, %s
+
+WS_TXT_ST_PART_PERIOD
+%s s, alle %s s ein Knackser
+
+WS_TXT_CLICKS_NONE
+keine Knackser
+
+WS_TXT_CLICKS_ONE
+1 Knackser
+
+WS_TXT_CLICKS_MANY
+%ld Knackser
+
+WS_TXT_ST_NOMUSIC
+Keine Musik gefunden: die ganze Datei bleibt
+
+WS_TXT_ST_SNAPPED_IN
+In: %s, auf einen Nulldurchgang gesetzt (Frame %s)
+
+WS_TXT_ST_SNAPPED_OUT
+Out: %s, auf einen Nulldurchgang gesetzt (Frame %s)
+
+WS_TXT_ST_PUT_IN
+In: %s (Frame %s)
+
+WS_TXT_ST_PUT_OUT
+Out: %s (Frame %s)
+
+WS_TXT_ST_PREFS_SAVED
+Einstellungen gesichert (ENVARC:WaveSmith.prefs)
+
+WS_TXT_ST_PREFS_PROGDIR
+Einstellungen neben WaveSmith gesichert (PROGDIR:WaveSmith.prefs)
+
+WS_TXT_ST_MARGINS
+Vorlauf %s, Nachlauf %s: für die geöffneten Dateien
+
+WS_TXT_ST_MARKED
+Stück %ld beginnt bei %s
+
+WS_TXT_ST_MARK_WHERE
+Klicken Sie zuerst dorthin, wo das Stück beginnt (oder Return beim Abspielen)
+
+WS_TXT_ST_MARKS_FULL
+Keine Marken mehr: 99 Stücke sind das Höchste eines Cue-Sheets
+
+WS_TXT_ST_MARK_NOSEL
+Klicken Sie zuerst eine Marke an: Del nimmt sie weg
+
+WS_TXT_ST_MARK_PICKED
+Die Marke von Stück %ld: ziehen Sie sie, oder Del nimmt sie weg
+
+WS_TXT_ST_UNMARKED
+Marke entfernt
+
+WS_TXT_ST_MEASURING
+Der Pegel wird gemessen (Stücke finden)
+
+WS_TXT_ST_FIND_CANCELLED
+Stücke finden abgebrochen: die Marken wie zuvor
+
+WS_TXT_ST_NOTRACKS
+Keine Stücke gefunden: setzen Sie die Marken von Hand (Return an der Abspielmarke)
+
+WS_TXT_ST_TRACKS
+%ld Stücke: eine Marke am Beginn eines jeden (Rückgängig nimmt sie zurück)
+
+WS_TXT_ST_SPLITMARKS_WHERE
+Setzen Sie zuerst Marken zwischen In und Out (Return, oder Bearbeiten/Stücke finden)
+
+WS_TXT_ST_SPLITMARKS
+In %ld Stücke geteilt: %s und folgende
+
+WS_TXT_ST_MARGINS_KEPT
+Vorlauf %s, Nachlauf %s: ab der nächsten Datei (In und Out wurden hier gesetzt)
+
+WS_TXT_MG_TITLE
+Vorlauf und Nachlauf
+
+WS_TXT_MG_LEAD
+In: so lange vor der Musik
+
+WS_TXT_MG_TAIL
+Out: so lange nach der Musik
+
+WS_TXT_MG_MS
+ms
+
+WS_TXT_MG_USE
+_Benutzen
+
+WS_TXT_MG_CANCEL
+_Abbrechen
+
+WS_TXT_ST_SAVING
+%s wird gesichert: %ld %%%s
+
+WS_TXT_ST_SAVED
+Gesichert: %s behalten
+
+WS_TXT_ST_NONEXT
+Keine Klangdatei nach dieser in ihrer Schublade
+
+WS_TXT_ST_NOHELP
+Die Anleitung ist nicht installiert (WaveSmith.guide)
+
+WS_TXT_ST_BADTIME
+Keine Zeit: geben Sie m:ss.mmm ein
+
+WS_TXT_ST_PLAY_BUSY
+Die Karte wird von %s benutzt
+
+WS_TXT_ST_PLAY_NOCARD
+Keine Prisma-Megamix-Karte gefunden
+
+WS_TXT_ST_PLAY_NOLIB
+Nichts zum Abspielen: keine prisma.library 3 (Einstellungen, Abspielen über)
+
+WS_TXT_ST_PLAY_NOAHI
+Abspielen über AHI braucht ahi.device 4
+
+WS_TXT_ST_PLAY_AHIMODE
+Der AHI-Modus ist nicht da oder belegt (Einstellungen, AHI-Modus...)
+
+WS_TXT_ST_PLAY_NOMEM
+Nicht genug Speicher zum Abspielen
+
+WS_TXT_ST_PLAY_AHIBUSY
+Spielt über AHI: die Karte benutzt %s
+
+WS_TXT_ST_PLAY_AHIJOB
+Über AHI: die Karte kodiert, ihr Eingang ist bis dahin stumm
+
+WS_TXT_ST_AHIMODE
+AHI-Modus: %s
+
+WS_TXT_AHI_TITLE
+WaveSmith spielt über
+
+WS_TXT_AHI_DEFAULT
+AHI-Vorgabe
+
+WS_TXT_ST_PLAY_ERR
+Die Karte wollte nicht abspielen (%ld)
+
+WS_TXT_ST_PLAYING
+Spielt %s bis %s
+
+WS_TXT_ST_PLAYED
+Gespielt: %s bis %s
+
+WS_TXT_ST_STOPPED
+Gestoppt bei %s
+
+WS_TXT_ST_ATEND
+Die Abspielmarke ist am Ende: |< oder ein Klick zum Abspielen
+
+WS_TXT_LEFT_PRE
+, etwa 
+
+WS_TXT_LEFT_POST
+ übrig
+
+WS_TXT_ST_READ_CANCELLED
+Lesen von %s abgebrochen
+
+WS_TXT_ST_DECODE_CANCELLED
+Dekodieren von %s abgebrochen
+
+WS_TXT_ST_SAVE_CANCELLED
+Sichern abgebrochen: %s ist wie zuvor
+
+WS_TXT_ST_NOSEL
+Markieren Sie zuerst einen Teil: ziehen Sie über den Klang
+
+WS_TXT_ST_PAUSED
+Pause bei %s: Play oder die Leertaste spielt weiter
+
+WS_TXT_ST_DECODING
+%s wird dekodiert: %ld %%%s
+
+WS_TXT_ST_DECODE_FAILED
+%s ließ sich nicht dekodieren (prismadsp.library, Fehler %ld)
+
+WS_TXT_ST_SAVED_AS
+Gesichert als %s: %s behalten
+
+WS_TXT_ST_UNDONE
+Rückgängig: In %s, Out %s
+
+WS_TXT_ST_REDONE
+Wiederholt: In %s, Out %s
+
+WS_TXT_ST_NOUNDO
+Nicht genug Speicher, um die Änderungen für Rückgängig zu behalten
+
+WS_TXT_ST_CUT_JOINED
+%s herausgeschnitten, die Teile verbunden (Rückgängig: Rechts-Amiga Z)
+
+WS_TXT_ST_CUT_SILENCE
+%s herausgeschnitten, Stille an seiner Stelle (Rückgängig: Rechts-Amiga Z)
+
+WS_TXT_ST_CUTFULL
+Zu viele Schnitte: erst sichern
+
+WS_TXT_ST_CUTREADING
+Warten Sie, bis %s gelesen ist
+
+WS_TXT_ST_SPLIT_WHERE
+Setzen Sie die Abspielmarke zuerst zwischen In und Out: dort wird geteilt
+
+WS_TXT_ST_SPLIT
+Geteilt in %s und %s
+
+WS_TXT_ST_SPLIT_CANCELLED
+Teilen abgebrochen: nichts geschrieben
+
+WS_TXT_ASK_SPLIT_OVER
+Die Teile von %s (-1, -2) gibt es schon.\nErsetzen?
+
+WS_TXT_ASK_SPLIT_OVER_GADS
+_Ersetzen|_Abbrechen
+
+WS_TXT_ASK_CUT
+Den markierten Teil aus %s herausschneiden.\nDie Teile links und rechts verbinden\noder Stille an seine Stelle setzen?
+
+WS_TXT_ASK_CUT_GADS
+_Verbinden|_Stille|_Abbrechen
+
+WS_TXT_E_NOTWAV
+%s ist keine WAV-Datei
+
+WS_TXT_E_NOTPCM16
+%s: bisher nur WAV-Dateien mit 16-Bit-PCM, mono oder stereo
+
+WS_TXT_ASK_UNSAVED
+%s hat Änderungen, die nicht gesichert sind.
+
+WS_TXT_ASK_UNSAVED_GADS
+_Sichern|_Verwerfen|_Abbrechen
+
+WS_TXT_ASK_REVERT
+Die Änderungen an %s verwerfen und die Datei neu einlesen?
+
+WS_TXT_ASK_REVERT_GADS
+_Verwerfen|_Abbrechen
+
+WS_TXT_ASK_SPLITMARKS_OVER
+Einige Stücke von %s (-01, -02 ...) gibt es schon.\nErsetzen?
+
+WS_TXT_ASK_REPLACE
+Eine Datei dieses Namens gibt es schon.\nDurch den geschnittenen Klang ersetzen?
+
+WS_TXT_ASK_REPLACE_GADS
+_Ersetzen|_Abbrechen
+
+WS_TXT_E_NEEDDSP
+%s ist kein 16-Bit-WAV: andere Formate brauchen prismadsp.library 1.1
+
+WS_TXT_E_NOMEM
+Nicht genug Speicher für %s
+
+WS_TXT_E_EMPTY
+%s enthält keinen Klang
+
+WS_TXT_E_DOS
+%s: DOS-Fehler %ld
+
+WS_TXT_E_SAVE
+Sichern misslungen: DOS-Fehler %ld (die Datei ist wie zuvor)
+
+WS_TXT_DECIMAL
+,
+
+WS_TXT_THOUSANDS
+.
+
+WS_TXT_E_SAVE_EMPTY
+Nichts zu sichern: In und Out liegen an einer Stelle
+
+WS_TXT_E_KEPT
+Sichern auf halbem Weg misslungen: der geschnittene Klang ist %s, das Original fort
+
+WS_TXT_E_KEPT_BAK
+Sichern auf halbem Weg misslungen: der geschnittene Klang ist %s, das Original ist %s
+
+WS_TXT_E_PREFS
+Einstellungen nicht gesichert: DOS-Fehler %ld
+
+WS_TXT_E_CUE
+Gesichert, aber nicht das Cue-Sheet: DOS-Fehler %ld
+
+WS_TXT_E_MARGINS
+Vorlauf und Nachlauf brauchen slider.gadget und integer.gadget (ReAction)
+
+WS_TXT_M_PROJECT
+Projekt
+
+WS_TXT_M_OPEN
+Öffnen...
+
+WS_TXT_M_NEXT
+Nächste öffnen
+
+WS_TXT_M_SAVE
+Sichern
+
+WS_TXT_M_SAVEAS
+Sichern als...
+
+WS_TXT_M_REVERT
+Neu einlesen
+
+WS_TXT_M_SPLIT
+Am Cursor teilen...
+
+WS_TXT_M_SPLITMARKS
+An den Marken teilen...
+
+WS_TXT_M_ADDMARK
+Marke setzen
+
+WS_TXT_M_DELMARK
+Marke entfernen
+
+WS_TXT_M_FINDTRACKS
+Stücke finden
+
+WS_TXT_M_EFFECTS
+Effekte
+
+WS_TXT_M_FADEIN
+Einblenden
+
+WS_TXT_M_FADEOUT
+Ausblenden
+
+WS_TXT_SHAPE_LINEAR
+Linear
+
+WS_TXT_SHAPE_EVEN
+Gleichmäßig
+
+WS_TXT_SHAPE_SCURVE
+S-Kurve
+
+WS_TXT_ST_FADED_IN
+Eingeblendet von %s bis %s (%s). Rückgängig: Rechts-Amiga Z
+
+WS_TXT_ST_FADED_OUT
+Ausgeblendet von %s bis %s (%s). Rückgängig: Rechts-Amiga Z
+
+WS_TXT_LENGTH_FADEIN
+Länge %s, eingeblendet %s s
+
+WS_TXT_LENGTH_FADEOUT
+Länge %s, ausgeblendet %s s
+
+WS_TXT_LENGTH_FADES
+Länge %s, Blende ein %s s, aus %s s
+
+WS_TXT_ST_ENDFADE_IN
+Ab In eingeblendet über %s s. Rückgängig: Rechts-Amiga Z
+
+WS_TXT_ST_ENDFADE_OUT
+Bis Out ausgeblendet über %s s. Rückgängig: Rechts-Amiga Z
+
+WS_TXT_M_GAIN
+Verstärkung...
+
+WS_TXT_M_NORMALISE
+Normalisieren
+
+WS_TXT_M_PLAIN
+Blenden und Verstärkung entfernen
+
+WS_TXT_GN_TITLE
+Verstärkung
+
+WS_TXT_GN_GAIN
+Verstärkung
+
+WS_TXT_GN_DB
+dB
+
+WS_TXT_GN_PEAK
+Spitze des Teils: jetzt %s dB, danach %s dB
+
+WS_TXT_GN_SILENT
+Der Teil ist still
+
+WS_TXT_GN_PEAK_GONE
+Spitze des Teils: jetzt %s dB, danach still
+
+WS_TXT_GN_CLIPS
+Zu laut: Werte werden bei Vollaussteuerung gekappt
+
+WS_TXT_GN_NORMALISE
+Normalisieren
+
+WS_TXT_GN_TO
+auf
+
+WS_TXT_ST_GAINED
+Verstärkung %s dB von %s bis %s. Rückgängig: Rechts-Amiga Z
+
+WS_TXT_ST_GAINED_CLIPS
+Verstärkung %s dB von %s bis %s: einige Werte gekappt
+
+WS_TXT_ST_GAIN_KEPT
+Die Verstärkung bleibt, wie sie war
+
+WS_TXT_ST_NORMALISED
+Normalisiert auf %s dB: Verstärkung %s dB. Rückgängig: Rechts-Amiga Z
+
+WS_TXT_ST_NORM_THERE
+Die Spitze des Teils liegt schon bei %s dB
+
+WS_TXT_ST_NORM_SILENT
+Nichts zu normalisieren: der Teil ist still
+
+WS_TXT_ST_PLAINED
+Blenden und Verstärkung entfernt von %s bis %s. Rückgängig: Rechts-Amiga Z
+
+WS_TXT_ST_NOTHING_PLAIN
+Dort ist keine Blende und keine Verstärkung
+
+WS_TXT_E_GAINWIN
+Verstärkung braucht slider.gadget und string.gadget (ReAction)
+
+WS_TXT_K_RETURN
+Return
+
+WS_TXT_K_DEL
+Del
+
+WS_TXT_M_HELP
+Hilfe...
+
+WS_TXT_K_HELP
+Help
+
+WS_TXT_M_ABOUT
+Über...
+
+WS_TXT_M_QUIT
+Beenden
+
+WS_TXT_M_EDIT
+Bearbeiten
+
+WS_TXT_M_UNDO
+Rückgängig
+
+WS_TXT_M_REDO
+Wiederholen
+
+WS_TXT_M_CUTOUT
+Herausschneiden...
+
+WS_TXT_M_SELALL
+Alles auswählen
+
+WS_TXT_M_SELNONE
+Nichts auswählen
+
+WS_TXT_M_VIEW
+Ansicht
+
+WS_TXT_M_ZOOMIN
+Hineinzoomen
+
+WS_TXT_M_ZOOMOUT
+Herauszoomen
+
+WS_TXT_M_ALL
+Alles zeigen
+
+WS_TXT_M_ZOOMSEL
+Auf die Auswahl zoomen
+
+WS_TXT_M_ATIN
+Zum In
+
+WS_TXT_M_ATOUT
+Zum Out
+
+WS_TXT_M_PREVMARK
+Vorige Marke
+
+WS_TXT_M_NEXTMARK
+Nächste Marke
+
+WS_TXT_K_F1
+F1
+
+WS_TXT_K_F2
+F2
+
+WS_TXT_ST_AT_MARK
+Marke %ld: %s
+
+WS_TXT_ST_AT_IN
+In: %s
+
+WS_TXT_ST_AT_OUT
+Out: %s
+
+WS_TXT_ST_NO_MARK_BEFORE
+Keine Marke vor %s
+
+WS_TXT_ST_NO_MARK_AFTER
+Keine Marke nach %s
+
+WS_TXT_M_SCALE
+dB-Skala?
+
+WS_TXT_M_PLAYMENU
+Wiedergabe
+
+WS_TXT_M_PLAY
+Abspielen/Pause
+
+WS_TXT_M_PLAYSEL
+Auswahl abspielen
+
+WS_TXT_M_STOP
+Stopp
+
+WS_TXT_M_LISTENIN
+An In anhören
+
+WS_TXT_M_LISTENOUT
+An Out anhören
+
+WS_TXT_M_LOOP
+Schleife?
+
+WS_TXT_K_SPACE
+Leertaste
+
+WS_TXT_K_SHIFTSPACE
+Shift Leertaste
+
+WS_TXT_M_SETTINGS
+Einstellungen
+
+WS_TXT_M_PLAYWAY
+Abspielen über
+
+WS_TXT_M_WAYAUTO
+Automatisch
+
+WS_TXT_M_WAYCARD
+Die Prisma-Karte
+
+WS_TXT_M_WAYAHI
+AHI
+
+WS_TXT_M_AHIMODE
+AHI-Modus...
+
+WS_TXT_M_SNAP
+Auf Nulldurchgänge setzen?
+
+WS_TXT_M_MARGINS
+Vorlauf und Nachlauf...
+
+WS_TXT_M_BACKUP
+Sicherungskopie behalten?
+
+WS_TXT_M_ICONS
+Piktogramme erzeugen?
+
+WS_TXT_M_SAVEPREFS
+Einstellungen sichern
+
+WS_TXT_ABOUT
+WaveSmith %s\n\nKürzt die Enden einer Aufnahme nach Auge und Ohr.
+
+WS_TXT_ABOUT_ART
+Piktogramme und Bild von Martin \"Mason\" Merz
+
+WS_TXT_OK
+OK
+
+WS_TXT_SAVEAS_TITLE
+Den geschnittenen Klang sichern als
+
+WS_TXT_OPEN_TITLE
+Eine Klangdatei öffnen
+
+WS_TXT_NOPLAYER
+WaveSmith kann nichts abspielen:\nweder eine Prisma-Megamix-Karte noch AHI\n(ahi.device 4) wurde gefunden.\n\nDie Karte einbauen oder AHI installieren,\ndann WaveSmith neu starten.
+
+WS_TXT_M_TRIMWIN
+Kürzen...
+
+WS_TXT_TRIM_TITLE
+Kürzen
+
+WS_TXT_SHOW
+Zeigen
+
+WS_TXT_HINT_FADELEN
+Die Länge der Blende (Effekte, Einblenden und Ausblenden)
+
+WS_TXT_FADE_NONE
+keine
+
+WS_TXT_HINT_DECK
+Zurück: zum Halt davor (Anfang, In, die Marken, Out, Ende); Abspielen; Vor: zum nächsten Halt; Stopp; Pause (auch die Leertaste)
+
+WS_TXT_HINT_TRIMWIN
+Die Zeiten der Griffe, ihre Schritte, Blenden und Anhören in einem Fenster (Rechts-Amiga T)
+
+WS_TXT_HINT_FLAGIN
+In: die Ansicht dorthin, der Griff, den die Pfeiltasten bewegen (Doppelklick auf seine Fahne am Klang: das Kürzen-Fenster)
+
+WS_TXT_HINT_FLAGOUT
+Out: die Ansicht dorthin, der Griff, den die Pfeiltasten bewegen (Doppelklick auf seine Fahne am Klang: das Kürzen-Fenster)
+

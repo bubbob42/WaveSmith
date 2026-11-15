@@ -1,0 +1,23 @@
+; EditTry -- WaveSmith by hand on the real machine, listening through
+; the card (prisma.library in LIBS:, nothing is installed). A copy of the
+; test single (Test/Edit/Single.wav, tools/make_edit_single.py) is
+; trimmed in RAM:WaveSmith; what to try is in EditTry.txt, shown first. The
+; saved file is copied to Edit/Trim.wav beside this script afterwards.
+FailAt 21
+Assign >NIL: DEV: ""
+More DEV:EditTry.txt
+Delete >NIL: RAM:WaveSmith ALL QUIET
+MakeDir >NIL: RAM:WaveSmith
+Copy >NIL: DEV:sasc/WaveSmith RAM:WaveSmith/
+Copy >NIL: DEV:Test/Edit/Single.wav RAM:WaveSmith/Trim.wav
+Copy >NIL: DEV:Test/Edit/Single.prl RAM:WaveSmith/Trim.prl
+Version RAM:WaveSmith/WaveSmith FULL
+Echo "=== WaveSmith: the window is the test; close it when done"
+RAM:WaveSmith/WaveSmith RAM:WaveSmith/Trim.wav
+Echo "WaveSmith has ended (RC $RC)"
+MakeDir >NIL: DEV:Edit
+Copy >NIL: RAM:WaveSmith/Trim.wav DEV:Edit/Trim.wav
+Copy >NIL: RAM:WaveSmith/Trim.prl DEV:Edit/Trim.prl
+Copy >NIL: DEV:Test/Edit/Single.prl DEV:Edit/Single.prl
+List DEV:Edit/Trim.wav NOHEAD LFORMAT "=== saved: %n %l bytes"
+Echo "=== done"

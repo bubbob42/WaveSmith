@@ -1,0 +1,30 @@
+; EditFade -- WaveSmith's Effects menu in FS-UAE under MuForce and
+; MuGuardianAngel (DEV:mutools), on PAL hires 640x256: a copy of the test
+; single, Fade.wav (its level map beside it as Fade.prl), worked by
+; DEV:Test/EditFade.rexx at the places the trace (DEV:Test/fade.trace)
+; gives: a part faded in by Right-Amiga F, another faded out from the
+; menu, Undo and Redo, Save, Quit. After the run, on the host:
+;   python3 tools/make_edit_single.py --check dist/Test/Edit Fade --trace dist/Test/fade.trace
+; replays the save at its levels: every sample of the faded parts as
+; WaveSmith's sums make it, the rest byte for byte, the map's looks moved
+; by their level.
+;
+;   gmake autotest T=EditFade W=pal LIMIT=300
+FailAt 21
+Wait 8
+Execute DEV:mutools
+Delete >NIL: DEV:Test/fade.trace DEV:Test/Edit/Fade.wav DEV:Test/Edit/Fade.prl DEV:Test/Edit/Fade.wav.info ENV:WaveSmith.prefs QUIET
+Delete >NIL: DEV:Test/edit-fade-#? QUIET
+Echo >DEV:Test/auto.log "EditFade"
+Version >>DEV:Test/auto.log DEV:sasc/WaveSmith FULL
+Copy >NIL: DEV:Test/Edit/Single.wav DEV:Test/Edit/Fade.wav
+Copy >NIL: DEV:Test/Edit/Single.prl DEV:Test/Edit/Fade.prl
+SetEnv WaveSmithTrace DEV:Test/fade.trace
+Run >NIL: DEV:sasc/WaveSmith DEV:Test/Edit/Fade.wav
+Wait 10
+RX DEV:Test/EditFade.rexx
+Wait 3
+Echo >>DEV:Test/auto.log "still running:"
+Status >>DEV:Test/auto.log COMMAND=DEV:sasc/WaveSmith
+UnSetEnv WaveSmithTrace
+Echo >DEV:Test/AutoDone done

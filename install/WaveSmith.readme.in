@@ -1,0 +1,123 @@
+Short:        Trims a recording's ends by eye and ear
+Uploader:     marcus.gerards@googlemail.com (Marcus Gerards)
+Author:       Marcus Gerards
+Type:         mus/edit
+Version:      @VERSION@
+Architecture: m68k-amigaos >= 3.2.0
+Distribution: NoCD
+Requires:     AmigaOS 3.2; driver/audio/ahiusr_4.18.lha or Prisma Megamix card
+Kurz:         Kuerzt die Enden einer Aufnahme
+
+WaveSmith @VERSION@  --  @DATE@
+
+
+WHAT IT IS
+
+WaveSmith opens a recording -- a record side, a tape, a radio show taken
+with a sampler or a sound card -- finds where the music starts and where
+it ends, and shows the lead-in and the run-out shaded, In and Out set
+before and after them. Listen to both ends, drag the handles if the guess
+was not right, and Save: the file is written anew without the shaded
+parts.
+
+It also cuts parts out, splits a side into its tracks at markers and
+writes a cue sheet for them, and puts fades and gain on what it keeps.
+
+
+WHAT IT DOES
+
+  * the suggestion: the lead-in's groove noise and clicks, the run-out
+    after the last note, a margin before and after the music, every click
+    counted -- a long file's ends are read first, so In and Out are there
+    before the rest of the picture
+  * the window: an overview of the whole file, the waveform zoomed down
+    to single samples, one bar under it with the deck, Loop, the flags In
+    and Out, the length, Trim... and the lenses; a bubble says what is
+    under the mouse pointer
+  * the Trim window: the handles' times typed or nudged, each end listened
+    to, a fade on each
+  * listening: Play and Pause, Play selection, Listen at In and at Out,
+    Loop; the play head a sprite, steady on slow machines; the controls
+    answered first while the picture fills in by pieces (an A2000 with a
+    25 MHz 68030 keeps up)
+  * editing: Cut out, Undo and Redo, Split at the cursor; markers, Find
+    tracks, Split at markers, a cue sheet beside the files
+  * effects: Fade in, Fade out, fades at In and Out that follow the
+    handles, Gain..., Normalise, all drawn in the waveform
+  * Save, Save as, Open next; a backup of the original if wanted, an icon
+    for the new file if wanted
+  * English and German, an AmigaGuide manual in both, the Help key opens
+    the page about what is under the mouse pointer
+
+The sound stays in the file while WaveSmith works on it; only its picture
+is kept in memory, so a whole record side of 25 minutes is no trouble.
+
+
+WHAT IT NEEDS
+
+  * AmigaOS 3.2 (it is built with ReAction).
+  * To listen: AHI (ahi.device 4 or newer), or a Prisma Megamix sound card
+    with its software (prisma.library 3 or newer). Without either,
+    WaveSmith says so when it starts.
+  * WAV files, 16-bit PCM, mono or stereo, are read as they are. AIFF,
+    FLAC, MP3, Ogg Vorbis and AAC are decoded on the Prisma Megamix card
+    (prismadsp.library 1.1 or newer).
+  * Any 680x0; a 68030 or better is recommended. Tested on 68030s at 25
+    and 50 MHz (an A2000 and an A1200) and on a 68060.
+  * A screen of 640 x 256 or more; a deep one shows Mason's GlowIcons and
+    the About picture in their colours.
+
+
+INSTALLATION
+
+Double-click Install. WaveSmith goes into a drawer of its own, SYS:Tools
+by default, with its manual (Help) and its German translation
+(Catalogs). Nothing goes into LIBS:, DEVS: or S:.
+
+  * Novice: SYS:Tools/WaveSmith, with the GlowIcons.
+  * Intermediate and Expert: it asks where, and which icons -- the
+    GlowIcons or the 4-colour classic ones.
+
+By hand: copy the drawer Files/WaveSmith wherever you like, and
+Files/WaveSmith.info beside it for its icon. For the GlowIcons, copy what
+is in Files/Icons/Glow/WaveSmith over that drawer, and use
+Files/Icons/Glow/WaveSmithDrawer.info as the drawer's icon.
+
+To open a sound file by double-clicking its icon, make WaveSmith the icon's
+default tool, or click WaveSmith's icon with the file's icon shift-clicked.
+From the Shell:
+
+  WaveSmith [FILE] <file> [PUBSCREEN <name>]
+
+
+HISTORY
+
+1.0  (@DATE@)
+     - first public release, with an Installer and a drawer of its own
+     - free software under the LGPL 2.1 or later, the source on GitHub
+     - the About window says what WaveSmith does
+0.4  The new name (it was PrismaEdit); the bar, the Trim window, a steady
+     play head, the controls first on slow machines; Mason's art.
+0.3  AHI, German, the manual and the Help key, fades and gain.
+0.2  The card, files other than WAV, Cut out, Undo, markers, cue sheets.
+0.1  First version: In and Out suggested, trimmed, saved.
+
+
+THANKS
+
+To Martin "Mason" Merz, for WaveSmith's GlowIcons and the picture in its
+About window.
+
+To Thomas Luebker, for AmiAgent, which let WaveSmith be tested on real
+Amigas straight from the development machine.
+
+
+LICENCE
+
+WaveSmith is free software under the GNU Lesser General Public License,
+version 2.1 or (at your option) any later version. LICENSE in this
+archive says what it covers, COPYING.LIB holds the licence's text.
+Mason's icons and picture and AmigaOS 3.2's own icons are not covered:
+they are included with permission.
+
+The source: https://github.com/bubbob42/WaveSmith

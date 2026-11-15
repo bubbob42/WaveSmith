@@ -1,0 +1,18 @@
+VERSION		EQU	1
+REVISION	EQU	0
+
+DATE	MACRO
+		dc.b '15.11.2026'
+		ENDM
+
+VERS	MACRO
+		dc.b 'WaveSmith 1.0'
+		ENDM
+
+VSTRING	MACRO
+		dc.b 'WaveSmith 1.0 (15.11.2026)',13,10,0
+		ENDM
+
+VERSTAG	MACRO
+		dc.b 0,'$VER: WaveSmith 1.0 (15.11.2026)',0
+		ENDM

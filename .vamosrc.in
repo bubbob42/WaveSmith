@@ -1,0 +1,16 @@
+[volumes]
+; vamos configuration template: `gmake` expands this into the git-ignored
+; .vamosrc with the local SAS/C and project paths substituted. Comments must
+; not precede the first section header (vamos then exits 232 silently).
+sasc=@SASC_PATH@
+proj=@PROJECT_PATH@
+tmp=/tmp
+
+[assigns]
+sc=sasc:
+include=sasc:include
+lib=sasc:lib
+t=tmp:
+
+[path]
+path=sc:c

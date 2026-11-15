@@ -1,0 +1,527 @@
+@database WaveSmith.guide
+@$VER: WaveSmith.guide 1.0 (15.11.2026)
+@author "Marcus Gerards"
+@wordwrap
+
+@node Main "WaveSmith"
+
+@{b}WaveSmith@{ub} - die Enden einer Aufnahme, nach Auge und Ohr gekürzt
+
+WaveSmith öffnet eine Aufnahme, findet, wo die Musik beginnt und
+endet, und zeigt Einlauf und Auslauf schattiert, In und Out davor und
+danach gesetzt. Hören Sie beide Enden an, ziehen Sie die Griffe, wenn
+die Schätzung nicht stimmt, und sichern Sie: die Datei wird ohne die
+schattierten Teile neu geschrieben. WaveSmith schneidet auch Teile
+heraus, teilt eine Seite an Marken in ihre Stücke und schreibt ein
+Cue-Sheet dazu.
+
+  @{" Voraussetzungen                                         " link Requirements}
+  @{" Start          - von der Workbench oder aus der Shell   " link Starting}
+  @{" Das Fenster    - seine Teile, die Statuszeile           " link Window}
+  @{" Die Wellenform - Zoomen, Rollen, die Maus               " link Waveform}
+  @{" Kürzen         - In, Out, der Vorschlag                 " link Trimming}
+  @{" Anhören        - Play, Anhören, Schleife, Karte, AHI    " link Listening}
+  @{" Bearbeiten     - Herausschneiden, Rückgängig, Teilen    " link Editing}
+  @{" Marken         - Stücke, an Marken teilen, Cue-Sheet    " link Markers}
+  @{" Sichern        - Sichern, Sichern als, Nächste, Dateien " link Saving}
+  @{" Einstellungen  - das Menü Einstellungen                 " link Settings}
+  @{" Menüs                                                   " link Menus}
+  @{" Tasten                                                  " link Keys}
+  @{" Meldungen      - wenn etwas schiefgeht                  " link Messages}
+  @{" Geschichte                                              " link History}
+  @{" Danke                                                   " link Thanks}
+  @{" Lizenz                                                  " link Licence}
+
+Die Help-Taste öffnet die Seite zu dem, was unter dem Mauszeiger
+liegt. Bleibt der Mauszeiger kurz auf einem Knopf, einem Griff oder
+dem Klang, sagt eine Sprechblase, was es ist.
+
+@endnode
+
+@node Requirements "WaveSmith: Voraussetzungen"
+
+@{b}Voraussetzungen@{ub}
+
+  - AmigaOS 3.2 (ReAction)
+  - zum Abspielen: eine Prisma-Megamix-Karte mit prisma.library 3 oder
+    neuer, oder AHI (ahi.device 4 oder neuer)
+  - für andere Dateien als WAV (AIFF, FLAC, MP3, Ogg Vorbis, AAC): die
+    Karte und prismadsp.library 1.1 oder neuer, die sie dekodiert
+
+WAV-Dateien werden gelesen, wie sie sind: 16-Bit-PCM, mono oder
+stereo. Der Klang bleibt in der Datei, während WaveSmith daran
+arbeitet; nur sein Bild liegt im Speicher. Eine ganze Plattenseite von
+25 Minuten ist also kein Problem.
+
+@endnode
+
+@node Starting "WaveSmith: Start"
+
+@{b}Start@{ub}
+
+Das Installationsprogramm im Paket von WaveSmith (Doppelklick auf
+Install) legt es in eine eigene Schublade, SYS:Tools/WaveSmith, wenn
+nichts anderes gewählt wird, mit diesem Handbuch in Help und der
+deutschen Übersetzung in Catalogs; es bietet die GlowIcons oder die
+klassischen Piktogramme an. Von Hand: die Schublade Files/WaveSmith
+aus dem Paket irgendwohin kopieren. Nichts kommt nach LIBS:, DEVS:
+oder S:.
+
+Von der Workbench: WaveSmith als Standardprogramm einer Klangdatei,
+oder ein Klick auf das Piktogramm von WaveSmith, das Piktogramm einer
+Klangdatei mit Shift dazu angeklickt. Das Piktogramm einer Klangdatei,
+auf das offene Fenster fallen gelassen, wird ebenfalls geöffnet.
+
+Aus der Shell:
+
+  WaveSmith [FILE] <Datei> [PUBSCREEN <Name>]
+
+  FILE       die Klangdatei, die geöffnet wird
+  PUBSCREEN  der öffentliche Bildschirm (sonst die Workbench)
+
+Ohne Datei öffnet sich das Fenster leer: Projekt > Öffnen... wählt
+eine.
+
+Die Datei wird Stück für Stück gelesen, und das Fenster ist sofort zu
+benutzen. Von einer langen Datei werden die Enden zuerst gelesen, damit
+In und Out vor dem restlichen Bild da sind.
+
+@endnode
+
+@node Window "WaveSmith: Das Fenster"
+
+@{b}Das Fenster@{ub}
+
+Von oben:
+
+  - die @{"Übersicht" link Waveform}: die ganze Datei, In und Out, ein
+    Rahmen um den Teil, den die Wellenform zeigt
+  - der gepunktete Teiler: nach unten gezogen wird die Übersicht
+    größer und die Wellenform kleiner; Einstellungen > Einstellungen
+    sichern merkt sich seinen Platz
+  - die @{"Wellenform" link Waveform}: der sichtbare Teil der Datei,
+    mit einem Zeitlineal, eine Spur je Kanal
+  - der Rollbalken, so lang wie die Wellenform
+  - die Leiste: die @{"Laufwerkstasten" link Listening} und die
+    @{"Schleife" link Listening}; die @{"Fahnen" link Trimming} In und
+    Out; eine Anzeige, wie lang der behaltene Teil ist;
+    @{"Kürzen..." link Trimming}; die @{"Lupen" link Waveform}: heraus,
+    hinein, die ganze Datei
+  - die Statuszeile, Abbrechen daneben
+
+Die Titelleiste nennt die Datei, ihre Länge, ihre Rate und ihre
+Kanäle. Ein * hinter dem Namen: es gibt Änderungen, die noch nicht
+gesichert sind.
+
+Die Statuszeile sagt, was WaveSmith gefunden und getan hat. Während
+eine Datei gelesen, dekodiert oder gesichert wird, füllt sie sich von
+links, nennt die Prozent und die Restzeit, und Abbrechen (oder Esc)
+bricht die Arbeit ab.
+
+@endnode
+
+@node Waveform "WaveSmith: Die Wellenform"
+
+@{b}Die Wellenform und die Übersicht@{ub}
+
+Die Wellenform zeigt einen Teil der Datei, die Übersicht darüber die
+ganze. In beiden sind Einlauf und Auslauf (außerhalb von In und Out)
+schattiert.
+
+@{b}Zoomen@{ub}
+  Die Lupen rechts in der Leiste: heraus, hinein und die ganze Datei
+  (Rechts-Amiga -, + und 0). Die Fahne eines Griffs in der Leiste
+  zeigt 3 Sekunden um diesen Griff (auch Ansicht > Zum In und Zum
+  Out). Das Mausrad über der Wellenform zoomt dort, wo der Mauszeiger
+  ist: von Ihnen weg hinein, zu Ihnen hin heraus. Auch die Tasten nach
+  oben und nach unten zoomen hinein und heraus.
+
+@{b}Rollen@{ub}
+  Der Rollbalken; Shift und das Mausrad; in der Übersicht setzt ein
+  Klick die Ansicht dorthin, und ihr Rahmen lässt sich ziehen. Während
+  der Klang spielt, blättert die Ansicht um, wenn der Abspielkopf aus
+  ihr hinausläuft.
+
+@{b}Die Maus in der Wellenform@{ub}
+  Ein Klick setzt die Abspielmarke dorthin (beim Abspielen springt der
+  Klang dorthin). Ziehen über den Klang markiert einen Teil (Ansicht >
+  Auf die Auswahl zoomen füllt die Ansicht damit). In und Out werden
+  an ihrer Linie oder ihrer Fahne gezogen, eine Marke an ihrer Linie.
+
+Ansicht > dB-Skala? zeichnet den Pegel in Dezibel: leise Stellen
+werden größer.
+
+@endnode
+
+@node Trimming "WaveSmith: Kürzen"
+
+@{b}Kürzen@{ub}
+
+Ist eine Datei offen, sucht WaveSmith die Musik: das Rillenrauschen
+des Einlaufs wird gemessen, und die Musik beginnt, wo es deutlich
+lauter wird (das Knistern einer Platte führt es nicht in die Irre). In
+kommt eine halbe Sekunde vor die Musik, Out zwei Sekunden hinter ihren
+letzten Klang, damit ein Ausblenden ganz bleibt. Die Statuszeile sagt,
+was gefunden wurde: Einlauf und Auslauf, ihre Knackser, den Knacks der
+Auslaufrille alle paar Sekunden. Keine Musik gefunden: In und Out
+bleiben an den Enden der Datei.
+
+Die Griffe bewegen sich durch:
+
+  - Ziehen an ihrer Linie oder Fahne, in der Wellenform oder der
+    Übersicht
+  - die Pfeiltasten, sobald ein Griff gezogen, geschoben oder an
+    seiner Fahne in der Leiste gewählt wurde (siehe
+    @{"Tasten" link Keys})
+  - das Fenster Kürzen: eine Zeit eingegeben (m:ss.mmm) und Return,
+    oder [<] und [>], ein Schritt, der dem Zoom folgt
+
+Ein losgelassener Griff rückt auf den nächsten Nulldurchgang, damit
+der Schnitt nicht knackt (Einstellungen > Auf Nulldurchgänge setzen?
+schaltet das ab).
+
+@{b}Die Fahnen in der Leiste@{ub}
+  In und Out, in den Farben der Griffe: ein Klick zeigt 3 Sekunden um
+  diesen Griff, und die Pfeiltasten bewegen ihn von da an. Die
+  gedrückte Fahne ist der zuletzt berührte Griff, auch in der
+  Wellenform.
+
+@{b}Das Fenster Kürzen@{ub}
+  Kürzen... in der Leiste, Bearbeiten > Kürzen... (Rechts-Amiga T)
+  oder ein Doppelklick auf die Fahne eines Griffs in der Wellenform
+  öffnet es. Für In und für Out: die Zeit, [<] und [>], Anhören, die
+  Länge der Blende (Effekte > Einblenden und Ausblenden) und Zeigen,
+  das die Ansicht zum Griff bringt. Anhören bei In spielt 3 Sekunden
+  ab In, Anhören bei Out die letzten 3 Sekunden bis Out. Das Fenster
+  bleibt neben dem Hauptfenster offen, bis zu seinem Schließsymbol.
+
+Die Anzeige in der Leiste, zwischen den Fahnen und Kürzen..., sagt,
+wie lang der behaltene Teil ist (ab einer Stunde auf die
+Zehntelsekunde); ihre Sprechblase nennt auch die Blenden.
+
+Wie weit In und Out vor und hinter der Musik liegen, bestimmt
+Einstellungen > @{"Vorlauf und Nachlauf..." link Settings}.
+
+@endnode
+
+@node Listening "WaveSmith: Anhören"
+
+@{b}Anhören@{ub}
+
+Die Laufwerkstasten in der Leiste:
+
+  <<       Zurück: die Abspielmarke zum Halt davor -- eine Marke, In,
+           der Anfang der Datei
+  >        Abspielen: der markierte Teil, sonst ab der Abspielmarke
+           bis Out
+  >>       Vor: die Abspielmarke zum nächsten Halt -- eine Marke, Out,
+           das Ende der Datei
+  Stopp    hält an, die Abspielmarke zurück an den Anfang
+  ||       Pause: das Spiel hält an; noch einmal, und es spielt weiter
+  Schleife die Taste neben dem Laufwerk, eingeschaltet: was spielt,
+           beginnt an seinem Ende von vorn, bis Stopp -- der markierte
+           Teil, sonst In bis Out (hinter Out: bis zum Ende)
+
+Die Leertaste ist Play und Pause, Shift und Leertaste spielen den
+markierten Teil und nur ihn. Das Menü Wiedergabe hat diese auch, dazu
+An In anhören, An Out anhören und Schleife?, das die Schleife des
+Fensters ist: wer das eine schaltet, schaltet das andere. Die Schleife
+ist bei jedem Start aus.
+
+Der Abspielkopf läuft durch die Übersicht und die Wellenform. Bei Pause
+bleibt er stehen, und Play spielt von dort weiter.
+
+@{b}Worüber es spielt@{ub}
+  Einstellungen > Abspielen über: Automatisch (die Karte, sonst AHI),
+  Die Prisma-Karte oder AHI. Automatisch spielt über AHI, wenn keine
+  Karte da ist und wenn ein anderes Programm die Karte hat.
+  Einstellungen > AHI-Modus... wählt Modus und Rate in AHIs eigenem
+  Auswahlfenster; AHIs Standard ist der Modus seiner eigenen
+  Voreinstellungen. Einstellungen > Einstellungen sichern behält beide.
+
+@endnode
+
+@node Editing "WaveSmith: Bearbeiten"
+
+@{b}Bearbeiten@{ub}
+
+@{b}Herausschneiden@{ub} (Rechts-Amiga X): über einen Teil ziehen, dann
+wählen:
+  Verbinden  die Teile links und rechts schließen auf, eine dünne
+             Marke, wo die Lücke war
+  Stille     Stille an seiner Stelle, die Länge wie zuvor
+
+@{b}Rückgängig@{ub} (Rechts-Amiga Z) und @{b}Wiederholen@{ub} (Rechts-Amiga Y):
+jeder Schnitt, jede Bewegung von In oder Out und jede Änderung an den
+Marken ist ein Schritt. Eine Folge von Schritten mit gehaltener Taste
+ist ein Schritt. Zurück bis zur Datei, wie sie geöffnet wurde,
+verschwindet der * im Titel.
+
+Bearbeiten > Alles auswählen und Nichts auswählen markieren die ganze
+Datei oder nichts.
+
+@{b}Am Cursor teilen@{ub} (Projekt): für Seite.wav schreibt es Seite-1.wav
+von In bis zur Abspielmarke und Seite-2.wav von der Abspielmarke bis
+Out, neben die Datei, die Schnitte darin. Die Datei und das Fenster
+bleiben, wie sie waren.
+
+Nichts wird in die Datei geschrieben vor dem @{"Sichern" link Saving}.
+
+@endnode
+
+@node Markers "WaveSmith: Marken"
+
+@{b}Marken@{ub}
+
+Eine Marke sagt, wo ein Stück beginnt.
+
+  Return oder Enter  eine Marke an der Abspielmarke; tippen Sie
+                     sie, während der Klang spielt
+  ein Klick darauf   wählt sie; ziehen bewegt sie
+  Del                entfernt die gewählte
+  F1, F2             die Abspielmarke zur Marke davor oder danach,
+                     In und Out die Enden des Wegs; spielt der Klang,
+                     spielt er dort weiter (F1 binnen einer Sekunde
+                     nach einer Marke geht zu der davor)
+
+Zurück und Vor der Laufwerkstasten halten auch an den Marken, und
+jenseits von In und Out am Anfang und Ende der Datei.
+
+Bearbeiten > Stücke finden setzt eine an den Anfang jedes Stücks,
+gefunden an den Pausen dazwischen; eine lange Seite wird zuerst
+gemessen (die Statuszeile füllt sich, Abbrechen bricht ab).
+Rückgängig nimmt jede Änderung zurück.
+
+Projekt > An den Marken teilen schreibt die Stücke zwischen In und Out
+neben die Datei: für Seite.wav Seite-01.wav, Seite-02.wav und so fort.
+
+Sichern schreibt die Marken als Cue-Sheet neben die Datei, Seite.cue,
+und beim nächsten Öffnen der Datei kommen sie daraus zurück.
+SplitTracks CUE Seite.cue schneidet die Seite ebenfalls an ihnen.
+
+@endnode
+
+@node Saving "WaveSmith: Sichern"
+
+@{b}Sichern@{ub}
+
+Sichern (Rechts-Amiga S) schreibt die Datei neu, ohne die schattierten
+und die herausgeschnittenen Teile. Die Statuszeile zählt die Prozent;
+Abbrechen oder Esc bricht ab, und die Datei bleibt, wie sie war.
+Gesichert wird die Datei neu eingelesen, und Rückgängig beginnt von
+vorn.
+
+Sichern als... (Rechts-Amiga A) schreibt eine neue Datei, und
+WaveSmith arbeitet von da an an ihr; das Original bleibt, wie es war.
+Nach einem Namen, den es schon gibt, wird zuerst gefragt.
+
+Eine Datei, die kein WAV ist (FLAC, MP3, ...), wird zuerst in eine
+Arbeitsdatei daneben dekodiert, Seite.flac.wsmith.wav für Seite.flac,
+die verschwindet, wenn die Datei geschlossen wird. Sichern fragt dann
+nach einem neuen Namen, Seite-trim.wav vorgegeben.
+
+Was Sichern neben Seite.wav schreibt:
+
+  Seite.wav.bak   die alte Datei, mit Einstellungen >
+                  Sicherungskopie behalten? (und Seite.prl.bak)
+  Seite.prl       die Pegelkarte von PrismaRec, wenn es eine gibt,
+                  geschnitten wie der Klang
+  Seite.cue       das Cue-Sheet, wenn es Marken gibt
+  Seite.wav.info  für eine neue Datei, mit Einstellungen >
+                  Piktogramme erzeugen?
+
+Projekt > Nächste öffnen öffnet die nächste Klangdatei derselben
+Schublade, nach dem Namen: die Stücke einer Seite, eins nach dem
+anderen gekürzt.
+
+Projekt > Neu einlesen liest die Datei noch einmal, die Änderungen
+verworfen. Beenden oder eine andere Datei öffnen, während Änderungen
+nicht gesichert sind, fragt zuerst: Sichern, Verwerfen oder
+Abbrechen.
+
+@endnode
+
+@node Settings "WaveSmith: Einstellungen"
+
+@{b}Einstellungen@{ub}
+
+@{b}Abspielen über@{ub}: Automatisch, Die Prisma-Karte oder AHI; siehe
+@{"Anhören" link Listening}.
+
+@{b}AHI-Modus...@{ub}: Modus und Rate, mit denen WaveSmith über AHI
+spielt.
+
+@{b}Auf Nulldurchgänge setzen?@{ub} (an): ein losgelassener Griff rückt
+auf den nächsten Nulldurchgang.
+
+@{b}Vorlauf und Nachlauf...@{ub}: wie weit In vor der Musik liegt (0 bis
+10.000 ms, anfangs 500) und Out hinter ihr (0 bis 30.000 ms, anfangs
+2000). Schieben oder tippen Sie die Millisekunden; die Sekunden daneben
+folgen. Benutzen setzt In und Out an die neuen Stellen, solange noch
+nichts geändert wurde; sonst bekommt sie die nächste Datei.
+
+@{b}Sicherungskopie behalten?@{ub} (aus): Sichern behält die alte Datei,
+Seite.wav als Seite.wav.bak.
+
+@{b}Piktogramme erzeugen?@{ub} (an): jede neue Datei bekommt das
+Piktogramm des Systems für einen Klang.
+
+@{b}Einstellungen sichern@{ub}: diese, und den Platz des Teilers. Sie
+werden aus WaveSmith.prefs neben dem Programm gelesen, wenn es eine
+gibt, und dorthin gesichert; sonst aus ENV: und nach ENVARC: und ENV:
+gesichert.
+
+@endnode
+
+@node Menus "WaveSmith: Menüs"
+
+@{b}Menüs@{ub}
+
+  Projekt        Öffnen... (O), Nächste öffnen, Sichern (S),
+                 Sichern als... (A), Am Cursor teilen...,
+                 An den Marken teilen..., Neu einlesen, Hilfe...,
+                 Über... (?), Beenden (Q)
+  Bearbeiten     Rückgängig (Z), Wiederholen (Y),
+                 Herausschneiden... (X), Alles auswählen,
+                 Nichts auswählen, Marke setzen (Return),
+                 Marke entfernen (Del), Stücke finden, Kürzen... (T)
+  Ansicht        Hineinzoomen (+), Herauszoomen (-),
+                 Alles zeigen (0), Auf die Auswahl zoomen (Shift Z),
+                 Zum In, Zum Out, Vorige Marke (F1),
+                 Nächste Marke (F2), dB-Skala?
+  Effekte        Einblenden (F), Ausblenden (Shift F),
+                 Verstärkung... (G), Normalisieren,
+                 Blenden und Verstärkung entfernen
+  Wiedergabe     Abspielen/Pause (Leertaste),
+                 Auswahl abspielen (Shift Leertaste), Stopp,
+                 An In anhören, An Out anhören, Schleife?
+  Einstellungen  Abspielen über, AHI-Modus...,
+                 Auf Nulldurchgänge setzen?, Vorlauf und Nachlauf...,
+                 Sicherungskopie behalten?, Piktogramme erzeugen?,
+                 Einstellungen sichern
+
+Die Buchstaben sind Tasten mit Rechts-Amiga.
+
+@endnode
+
+@node Keys "WaveSmith: Tasten"
+
+@{b}Tasten@{ub}
+
+  Leertaste           Play, Pause
+  Shift Leertaste     den markierten Teil abspielen
+  Return, Enter       eine Marke an der Abspielmarke
+  Del                 die gewählte Marke entfernen
+  F1, F2              die Marke vor, nach der Abspielmarke
+  Esc                 Lesen, Dekodieren oder Sichern abbrechen
+  Help                diese Anleitung, auf der Seite zu dem, was
+                      unter dem Mauszeiger liegt
+  links, rechts       die Abspielmarke eine Spalte der Ansicht vor
+                      oder zurück; mit Shift eine Seite, mit Ctrl an
+                      den Anfang oder das Ende
+  hoch, runter        hineinzoomen, herauszoomen
+
+Wurde In oder Out gezogen oder geschoben, bewegen links und rechts
+statt dessen diesen Griff, bis zum nächsten Klick auf den Klang.
+Gehalten sind die Bewegungen ein Schritt für Rückgängig.
+
+Die Tasten der Menüs: siehe @{"Menüs" link Menus}.
+
+@endnode
+
+@node Messages "WaveSmith: Meldungen"
+
+@{b}Wenn etwas schiefgeht@{ub}
+
+@{b}... ist kein 16-Bit-WAV: andere Formate brauchen prismadsp.library
+1.1@{ub} - installieren Sie das Treiberpaket; die Karte dekodiert sie.
+
+@{b}Bisher nur WAV-Dateien mit 16-Bit-PCM, mono oder stereo@{ub} -
+andere WAV-Dateien (8 oder 24 Bit, mehr Kanäle) werden noch nicht
+gelesen.
+
+@{b}Die Karte wird von ... benutzt@{ub} - ein Abspieler hat die Karte:
+halten Sie ihn an, oder spielen Sie über AHI (Einstellungen >
+Abspielen über).
+
+@{b}Nichts zum Abspielen@{ub} - weder prisma.library 3 noch ahi.device
+4 ist installiert.
+
+@{b}Der AHI-Modus ist nicht da oder belegt@{ub} - wählen Sie mit
+Einstellungen > AHI-Modus... einen anderen.
+
+@{b}Sichern misslungen: DOS-Fehler ...@{ub} - die Datei ist wie zuvor.
+
+@{b}Sichern auf halbem Weg misslungen@{ub} - der geschnittene Klang ist
+erhalten, der von Seite.wav als Seite.wav.wsmith; die Meldung sagt, wo
+das Original ist.
+
+@{b}Zu viele Schnitte: erst sichern@{ub} - sichern Sie, dann schneiden
+Sie weiter.
+
+@endnode
+
+@node History "WaveSmith: Geschichte"
+
+@{b}Geschichte@{ub}
+
+1.0 (15.11.2026) - die erste öffentliche Ausgabe: ein Paket, dessen
+Installer WaveSmith in eine eigene Schublade legt; freie Software unter
+der GNU Lesser General Public License; das Fenster Über sagt, was
+WaveSmith tut.
+
+0.4 (6.11.2026) - der neue Name (vorher PrismaEdit); eine Leiste unter
+dem Klang: die Laufwerkstasten, Schleife, die Fahnen In und Out, die
+Länge, Kürzen... und die Lupen; das Fenster Kürzen; F1 und F2 von
+Marke zu Marke; der Abspielkopf als Sprite, ruhig auch auf langsamen
+Rechnern; Blenden und Verstärkung in den Spuren gezeichnet; Seiten und
+neue Ansichten stückweise gefüllt, die Bedienung zuerst beantwortet
+(auch auf einem A2000); ohne Karte und AHI sagt WaveSmith das; das
+GlowIcon und das Bild im Fenster Über von Martin "Mason" Merz.
+
+0.3 (27.10.2026) - Abspielen über AHI, Deutsch, dieses Handbuch und die
+Help-Taste, das Menü Effekte: Einblenden, Ausblenden, Blenden an In und
+Out, Verstärkung..., Normalisieren, Blenden und Verstärkung entfernen.
+
+0.2 (27.10.2026) - Abspielen über die Karte, andere Dateien als WAV auf
+der Karte dekodiert, das Mausrad, Herausschneiden, Rückgängig und
+Wiederholen, Am Cursor teilen, der Teiler, das Menü Einstellungen,
+Sichern als, das Menü Wiedergabe mit Schleife, die Pfeiltasten, Marken,
+Stücke finden, An den Marken teilen und Cue-Sheets.
+
+0.1 (26.10.2026) - die erste Version: ein 16-Bit-WAV geöffnet, In und
+Out vorgeschlagen, die Griffe gezogen, geschoben oder eingegeben,
+Sichern und Nächste.
+
+@endnode
+
+@node Thanks "WaveSmith: Danke"
+
+@{b}Danke@{ub}
+
+An Martin "Mason" Merz, für die Piktogramme von WaveSmith und das Bild
+in seinem Fenster Über.
+
+An Thomas Lübker, für AmiAgent, mit dem WaveSmith direkt vom
+Entwicklungsrechner aus auf echten Amigas getestet werden konnte.
+
+@endnode
+
+@node Licence "WaveSmith: Lizenz"
+
+@{b}Lizenz@{ub}
+
+WaveSmith ist Copyright (C) 2026 Marcus Gerards. Es ist freie
+Software: Es darf unter den Bedingungen der GNU Lesser General Public
+License, wie von der Free Software Foundation veröffentlicht, Version
+2.1 oder (nach Wahl) jeder späteren Version, weitergegeben und
+verändert werden. Es kommt OHNE JEDE GEWÄHRLEISTUNG.
+
+Die Datei LICENSE im Archiv von WaveSmith sagt, was die Lizenz umfasst,
+COPYING.LIB enthält ihren Text. Masons Piktogramme und Bild und die
+Piktogramme von AmigaOS 3.2 gehören nicht dazu: Sie sind mit Erlaubnis
+beigelegt.
+
+Der Quelltext liegt unter https://github.com/bubbob42/WaveSmith
+
+@endnode

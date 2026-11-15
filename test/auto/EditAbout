@@ -1,0 +1,24 @@
+; EditAbout -- WaveSmith's About window: Mason's picture (blended onto
+; the window's background, its pens obtained from 16 colours up, borrowed
+; below) beside the version and the credits. Right-Amiga ? opens it,
+; WaveSmith goes on (it is modeless), Esc shuts it, Quit leaves nothing.
+; DEV:Test/EditAbout.rexx reads the trace; grabs edit-about.ppm. Meant
+; for each kind of screen:
+;
+;   gmake autotest T=EditAbout W=pal4 LIMIT=150    (4 colours: borrowed)
+;   gmake autotest T=EditAbout W=pal LIMIT=150     (16: obtained)
+;   gmake autotest T=EditAbout W=rtg32 LIMIT=150   (RTG, true colour)
+FailAt 21
+Wait 8
+Delete >NIL: DEV:Test/about.trace DEV:Test/edit-about#? ENV:WaveSmith.prefs QUIET
+Echo >DEV:Test/auto.log "EditAbout"
+Version >>DEV:Test/auto.log DEV:sasc/WaveSmith FULL
+SetEnv WaveSmithTrace DEV:Test/about.trace
+Run >NIL: DEV:sasc/WaveSmith DEV:Test/Edit/Single.wav
+Wait 10
+RX DEV:Test/EditAbout.rexx
+Wait 3
+Echo >>DEV:Test/auto.log "still running:"
+Status >>DEV:Test/auto.log COMMAND=DEV:sasc/WaveSmith
+UnSetEnv WaveSmithTrace
+Echo >DEV:Test/AutoDone done

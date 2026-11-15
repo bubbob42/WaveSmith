@@ -1,0 +1,11 @@
+# build output
+/build/
+/dist/
+# generated from .vamosrc.in by the GNUmakefile (local paths)
+/.vamosrc
+# FS-UAE configs and the autotest system copies (gmake autotest)
+/fsuae/local/
+# reference material copied in per checkout (large, not ours to commit)
+/reference/
+.DS_Store
+*.uaem

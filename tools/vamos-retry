@@ -1,0 +1,48 @@
+#!/bin/sh
+#
+# vamos-retry -- run a vamos command, retrying a few times on a crash.
+#
+# vamos fails in bursts on this toolchain: a run segfaults (exit 139) or dies
+# with no message at all (232/252/255), and the very same command line succeeds
+# again moments later. It is not option- or source-dependent -- it was measured
+# against a known-good project's command line, which fails in the same bursts.
+# (A sibling project's "register calling convention hangs slink" turned out to
+# be the same thing, misdiagnosed as a compiler-option problem; don't repeat
+# that mistake by bisecting SAS/C options against a flaky emulator.)
+#
+# Only the measured crash signatures are retried. Everything else -- an AmigaOS
+# return code (5 WARN / 10 ERROR / 20 FAIL) or an sc/slink diagnostic such as
+# "Error 600: Invalid command" -- is a real failure and must stop the build at
+# once, loudly. Retrying those just prints the same error three times.
+#
+# Usage: tools/vamos-retry <command> [args...]
+
+ATTEMPTS=${VAMOS_ATTEMPTS:-3}
+n=1
+
+# 139 = SIGSEGV; 232/252/255 = vamos dying with no diagnostic at all.
+is_crash() {
+    case "$1" in
+        139|232|252|255) return 0 ;;
+        *)               return 1 ;;
+    esac
+}
+
+while : ; do
+    "$@"
+    rc=$?
+    [ $rc -eq 0 ] && exit 0
+
+    if ! is_crash "$rc"; then
+        exit $rc
+    fi
+
+    if [ $n -ge "$ATTEMPTS" ]; then
+        echo "vamos-retry: still failing after $ATTEMPTS attempts (exit $rc):" >&2
+        echo "  $*" >&2
+        exit $rc
+    fi
+
+    echo "vamos-retry: vamos crashed (exit $rc), attempt $n of $ATTEMPTS; retrying" >&2
+    n=$((n + 1))
+done

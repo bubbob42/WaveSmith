@@ -1,0 +1,51 @@
+WaveSmith -- licence
+====================
+
+WaveSmith trims a recording's ends by eye and ear, on AmigaOS 3.2.
+Copyright (C) 2026 Marcus Gerards.
+
+1. WaveSmith is free software: you can redistribute it and/or modify it
+   under the terms of the GNU Lesser General Public License as published
+   by the Free Software Foundation, either version 2.1 of the License, or
+   (at your option) any later version.
+
+   WaveSmith is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+   Lesser General Public License for more details.
+
+   The licence's full text is in COPYING.LIB. The source is at
+   https://github.com/bubbob42/WaveSmith
+
+2. The licence covers WaveSmith's own work: the program (WaveSmith/),
+   waveform.gadget (Waveform/, Include/gadgets/waveform.h), the modules
+   in Common/, the manuals (guide/), the catalogs (catalogs/), the
+   Installer script and the readme's template (install/), the classic
+   icons the tools draw, the tools (tools/), the tests (test/) and the
+   documents (Documentation/).
+
+3. These parts are not covered and keep their owners' terms:
+
+   3.1 Martin "Mason" Merz's art: WaveSmith's GlowIcons (icons/glow/),
+       the picture in the About window (art/), and the About GlowIcon
+       from his AmigaOS 3.2 icon pack (icons/readme/).
+
+   3.2 AmigaOS 3.2's own icons: its standard installer icon, its
+       GlowIcon and its classic image (icons/install/), and the GlowIcons
+       of its default drawer and AmigaGuide icons, ENVARC:Sys/def_drawer.info
+       and def_amigaguide.info (icons/drawer/, icons/guide/).
+
+       The art in 3.1 and 3.2 is included with permission. The package's
+       icons made from it are not covered either: its GlowIcons
+       (Files/Icons/Glow/), the icon of the package's drawer, Install.info,
+       WaveSmith.readme.info, LICENSE.info and COPYING.LIB.info. Using
+       this art outside WaveSmith needs its owners' permission.
+
+   3.3 The Prisma libraries' interface: Include/libraries/prisma.h and
+       prismadsp.h, and the clib, fd, pragma, pragmas, inline and proto
+       files of prisma.library and prismadsp.library. They are
+       (C) 2016-2026 Christian Euler & Marcus Gerards, and are here so
+       that WaveSmith can be built.
+
+   3.4 The AHI 4.18 developer headers (SDK/ahi/), (C) 1994-1997 Martin
+       Blom, freely distributable with AHI (see SDK/ahi/README).

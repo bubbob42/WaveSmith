@@ -1,0 +1,38 @@
+; EditMarks -- WaveSmith's markers in FS-UAE under MuForce and
+; MuGuardianAngel (DEV:mutools), on PAL hires 640x256: a copy of the
+; record side make_vinyl_side.py made (DEV:Test/Split/side.wav: three
+; songs) opened as DEV:Test/Split/Marks.wav, read ends first
+; (WaveSmithEnds 20); DEV:Test/EditMarks.rexx works the window: Find
+; tracks, a marker by Return, picked and Del, dragged and undone, Split at
+; markers, Save with its cue sheet read back, Quit. After the run, on the
+; host:
+; (the three tracks Split at markers wrote, each song inside one -- checked
+; against the side as it was: Save trimmed Marks.wav after the split)
+;   d=$(mktemp -d); cp dist/Test/Split/side.wav $d/Marks.wav
+;   cp dist/Test/Split/side.txt $d/Marks.txt; cp dist/Test/Split/Marks-0?.wav $d
+;   python3 tools/make_vinyl_side.py --check $d Marks
+;
+;   gmake autotest T=EditMarks W=pal LIMIT=600
+FailAt 21
+Wait 8
+Execute DEV:mutools
+Delete >NIL: DEV:Test/marks.trace DEV:Test/Split/Marks#? QUIET
+Echo >DEV:Test/auto.log "EditMarks"
+Version >>DEV:Test/auto.log DEV:sasc/WaveSmith FULL
+Copy >NIL: DEV:Test/Split/side.wav DEV:Test/Split/Marks.wav
+SetEnv WaveSmithTrace DEV:Test/marks.trace
+SetEnv WaveSmithEnds 20
+Run >NIL: DEV:sasc/WaveSmith DEV:Test/Split/Marks.wav
+Wait 10
+RX DEV:Test/EditMarks.rexx
+Wait 3
+Echo >>DEV:Test/auto.log "still running:"
+Status >>DEV:Test/auto.log COMMAND=DEV:sasc/WaveSmith
+Echo >>DEV:Test/auto.log "the cue sheet:"
+Type >>DEV:Test/auto.log DEV:Test/Split/Marks.cue
+Echo >>DEV:Test/auto.log "the trace:"
+Type DEV:Test/marks.trace >>DEV:Test/auto.log
+List >>DEV:Test/auto.log DEV:Test/Split PAT=Marks#? LFORMAT "  %N %L"
+UnSetEnv WaveSmithTrace
+UnSetEnv WaveSmithEnds
+Echo >DEV:Test/AutoDone done

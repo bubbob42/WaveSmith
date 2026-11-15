@@ -1,0 +1,96 @@
+EditTry -- WaveSmith by hand, through the card's player
+
+A copy of the test single is opened from RAM:WaveSmith: 40 s, a lead-in
+with the needle's thump and clicks, three chords, a fade, the run-out
+groove's click every 1.8 s. Nothing outside RAM:WaveSmith is written.
+
+Try:
+ 1  Listen (beside In): 3 s from In through the card, the orange play
+    head running. Listen beside Out: the last 3 s before Out.
+ 2  Play, then Space: it pauses ("Paused at ...") and the head stays;
+    Space or Play again goes on from there. Stop sends the marker back
+    to the start; |< and >| put it at the start or the end.
+ 3  Zoom in (At In) and Play: the head should glide, and the view turn
+    a page when the head runs off it -- the next page already drawn.
+ 4  Click on the sound while it plays: the card jumps there. Stopped,
+    a click puts the marker there and Play starts from it.
+ 5  The mouse wheel over the waveform zooms where the pointer is (away
+    from you: in); Shift and the wheel scroll; over the overview strip
+    at the top the view goes there.
+ 6  Drag over the sound to mark a part; View/Zoom to selection fills
+    the view with it.
+ 7  Rest the pointer on a handle, on the sound, on a button: bubbles
+    (none over the waveform before a file is open).
+ 8  Drag In or Out -- by its line or its little flag in the waveform,
+    by its line in the overview strip at the top: the title gets a *
+    (changed, not saved). Quit or
+    the close gadget asks -- in a window centred on WaveSmith's: Save,
+    Discard or Cancel (Return the first, Esc the last).
+ 9  Drop a sound file's icon on the window: it opens (asking first if
+    the open one has changes).
+10  The Edit menu: drag over a part, Cut out (Right-Amiga X) asks --
+    Join closes the gap (a thin mark where it was), Silence leaves a
+    flat tinted stretch, the length as it was. Right-Amiga Z undoes it,
+    Right-Amiga Y does it again; every handle move is a step too, and
+    Undo back to the file as opened takes the * away.
+11  Mark a part, Right-Amiga Shift Z: the view zooms to it, as View/Zoom
+    to selection does (Right-Amiga Z alone is Undo).
+12  A click puts the play marker; Project/Split at the cursor writes
+    Trim-1.wav (In to the marker) and Trim-2.wav (the marker to Out)
+    beside the file, the cuts in them -- the file and the window stay
+    as they were.
+13  Save (Right-Amiga S): the gauge counts the per cent and says the
+    time left; Cancel (or Esc) calls the save off, the file as it was.
+    Saved -- the cuts in it -- the file is opened again (Cancel calls
+    that reading off), and Undo starts anew.
+14  The dotted bar under the overview strip at the top: drag it down,
+    the overview grows and the waveform shrinks; drag it back. Resize
+    the window: the two keep their shares.
+15  Settings: Snap to zero crossings? off -- a handle let go stays where
+    it was let go (the status line no longer says "snapped"); on again.
+    Lead and tail...: slide or type the milliseconds, the seconds beside
+    them follow; Use moves In and Out to the new suggestion while
+    nothing was changed yet (no * in the title), Esc or Cancel leaves
+    everything as it was. Keep a backup? on, then Save: the old file
+    stays as Trim.wav.bak (its level map as Trim.prl.bak). Create icons?
+    (on): every new file gets the system's sound icon. Save settings:
+    ENVARC:WaveSmith.prefs -- the bar's place in it -- read at the next
+    start.
+16  Project/Save as... (Right-Amiga A): name a new file; it is written
+    (its icon and map with it), and the window works on it from then on
+    -- the original as it was. Its own name saves in place; a name that
+    is there is asked about first. For Single.flac or Single.m4a, Save
+    asks this way too, <name>-trim.wav filled in.
+17  The Play menu: Play/Pause (Space), Play selection (Shift Space: the
+    part marked, and only it), Stop, Listen at In, Listen at Out; Loop?
+    on: what was asked for plays again and again until Stop.
+18  The cursor keys: a click on the sound, then Left and Right move the
+    play marker a column of the view each (Shift a page, Ctrl to the
+    start or the end); drag or nudge In (or Out) and the keys move that
+    handle instead -- held down, one Right-Amiga Z takes the whole run
+    back. Up and Down zoom in and out where it is.
+19  Markers: Edit/Find tracks puts one at each track's start (a long
+    side is measured first: the gauge, Cancel); Return (or Enter) puts
+    one at the play marker -- tap it while it plays; click a marker and
+    Del takes it away, drag one to move it; Undo takes each change back.
+    Project/Split at markers writes <name>-01.wav, -02 ... beside the
+    file. Save writes <name>.cue beside it, and the markers come back
+    from it when the file is opened again.
+20  Settings / Play through: Automatic (the card, else AHI), The Prisma
+    card, or AHI; Settings / AHI mode... picks AHI's mode. Without the
+    card (the A1200, the A2000), Play and Listen play through AHI.
+21  Rest the pointer on the sound, on Save, on Play, and press Help:
+    the manual opens at the page about it, in the system's language;
+    Project/Help... opens its first page.
+22  Close the window (or Right-Amiga Q): the manual's window goes too.
+
+On the A4000T, Single.flac and Single.m4a open too (decoded first; the
+gauge, the time left and Cancel there as well -- WARNING: Cancel for
+Single.m4a needs prisma.library 3.2 and prismadsp.library 1.2; with
+older ones a chip decode called off leaves the card unable to decode
+until it is reset).
+
+Then the saved file is copied to Edit/Trim.wav beside this script, for
+the Mac's check (tools/make_edit_single.py --check).
+
+(Space pages on, Q leaves this text.)

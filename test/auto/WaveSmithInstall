@@ -1,0 +1,74 @@
+; WaveSmithInstall -- the package's Installer at the NOVICE level (no
+; questions: SYS:Tools/WaveSmith, the GlowIcons), its pages clicked by
+; DEV:Test/InstallClicks (grabs DEV:Test/install-<tag>-<n>.ppm). The staged
+; package is DEV:Release (gmake release-drawer; `gmake autotest` makes it).
+; A: as the disk is (AHI installed): the closing page without the notice;
+; what was installed copied back to DEV:Test/Installed, which
+; test/auto/WaveSmithInstall.check compares with the package byte for
+; byte; the drawers opened on Workbench and grabbed, with the GlowIcons and
+; then the classic icons (DEV:Test/WSDrawers.rexx: arranged-<set>-<n>.ppm);
+; then deleted from the test disk's copy.
+; B: once more with DEVS:ahi.device hidden (and no prisma.library on the
+; test disk): the closing page carries the notice, the installation goes on.
+;   gmake autotest T=WaveSmithInstall W=rtg32 LIMIT=300
+FailAt 21
+Wait 10
+If NOT EXISTS DEV:Release/WaveSmith/Install
+  Echo >DEV:Test/auto.log "SKIPPED: no DEV:Release (gmake release-drawer)"
+  Echo >DEV:Test/AutoDone done
+  Quit
+EndIf
+Delete >NIL: SYS:Tools/WaveSmith SYS:Tools/WaveSmith.info ALL QUIET
+Delete >NIL: DEV:Test/install-w-#? DEV:Test/install-x-#? DEV:Test/arranged-#? DEV:Test/Installed DEV:Test/Installed.info ALL QUIET
+; a run that died in B left AHI hidden
+If EXISTS DEVS:ahi.device.away
+  Rename >NIL: DEVS:ahi.device.away DEVS:ahi.device
+EndIf
+Echo >DEV:Test/auto.log "WaveSmithInstall"
+List >>DEV:Test/auto.log DEVS:ahi.device LFORMAT "  A with %P%N"
+Delete >NIL: RAM:WSInstallDone RAM:WSInstallDone2 QUIET
+Stack 20000
+; every (source) is relative to the unpacked drawer, which Workbench makes
+; the current one for a double-clicked Install icon; the pages clicked by
+; DEV:Test/InstallClicks, the Installer in the foreground
+CD DEV:Release/WaveSmith
+Run >NIL: Execute DEV:Test/InstallClicks RAM:WSInstallDone w
+FailAt 100
+SYS:System/Installer SCRIPT DEV:Release/WaveSmith/Install APPNAME WaveSmith MINUSER NOVICE DEFUSER NOVICE NOPRETEND NOLOG
+Echo >>DEV:Test/auto.log "  Installer RC $RC (0 = it reached its own (exit) page)"
+FailAt 21
+Echo >RAM:WSInstallDone "done"
+CD SYS:
+Wait 8
+Echo >>DEV:Test/auto.log "installed:"
+List >>DEV:Test/auto.log SYS:Tools/WaveSmith ALL LFORMAT "  %P%N %L"
+List >>DEV:Test/auto.log SYS:Tools/WaveSmith.info LFORMAT "  %P%N %L"
+; the arrangement (tools/arrange_drawers.py) on Workbench: SYS:Tools and
+; every drawer installed, grabbed (arranged-glow-<n>.ppm); then the classic
+; icons, copied over as the Installer copies them when they are chosen --
+; after the copy back, so the .check still sees what a novice gets
+RX DEV:Test/WSDrawers.rexx glow
+Copy SYS:Tools/WaveSmith DEV:Test/Installed ALL CLONE QUIET
+Copy SYS:Tools/WaveSmith.info DEV:Test/Installed.info CLONE QUIET
+Copy DEV:Release/WaveSmith/Files/WaveSmith/WaveSmith.info SYS:Tools/WaveSmith/WaveSmith.info CLONE QUIET
+Copy DEV:Release/WaveSmith/Files/WaveSmith.info SYS:Tools/WaveSmith.info CLONE QUIET
+RX DEV:Test/WSDrawers.rexx classic
+Delete >NIL: SYS:Tools/WaveSmith SYS:Tools/WaveSmith.info ALL QUIET
+
+; B: without AHI (hidden for this run, put back after): the closing page
+; says WaveSmith has nothing to play through (install-x-<n>: the notice)
+Echo >>DEV:Test/auto.log "B: without AHI"
+Rename >NIL: DEVS:ahi.device DEVS:ahi.device.away
+CD DEV:Release/WaveSmith
+Run >NIL: Execute DEV:Test/InstallClicks RAM:WSInstallDone2 x
+FailAt 100
+SYS:System/Installer SCRIPT DEV:Release/WaveSmith/Install APPNAME WaveSmith MINUSER NOVICE DEFUSER NOVICE NOPRETEND NOLOG
+Echo >>DEV:Test/auto.log "  Installer RC $RC"
+FailAt 21
+Echo >RAM:WSInstallDone2 "done"
+CD SYS:
+Rename >NIL: DEVS:ahi.device.away DEVS:ahi.device
+Wait 8
+List >>DEV:Test/auto.log SYS:Tools/WaveSmith/WaveSmith DEVS:ahi.device LFORMAT "  %P%N"
+Delete >NIL: SYS:Tools/WaveSmith SYS:Tools/WaveSmith.info ALL QUIET
+Echo >DEV:Test/AutoDone done

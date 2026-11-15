@@ -1,0 +1,31 @@
+; WaveSmithDrawers -- the installed drawers on Workbench, on ANY machine:
+; WaveSmithInstall needs W=rtg32 (its Installer clicks are measured
+; there), so this copies the package's Files into SYS:Tools the way the
+; Installer does for a novice -- the drawer whole, the GlowIcon set
+; (Files/Icons/Glow/WaveSmith) over its classic icons, the drawer's
+; GlowIcon beside it -- and
+; DEV:Test/WSDrawers.rexx opens SYS:Tools and every drawer, grabbing the
+; screen after each (arranged-glow-<n>.ppm); then the classic icons, as
+; the Installer copies them when they are chosen (arranged-classic-<n>).
+; The layout itself: tools/arrange_drawers.py. Mostly for W=pal, the
+; tightest Workbench (640x256, Topaz 8).
+;   gmake autotest T=WaveSmithDrawers W=pal LIMIT=180
+FailAt 21
+Wait 10
+If NOT EXISTS DEV:Release/WaveSmith/Install
+  Echo >DEV:Test/auto.log "SKIPPED: no DEV:Release (gmake release-drawer)"
+  Echo >DEV:Test/AutoDone done
+  Quit
+EndIf
+Delete >NIL: SYS:Tools/WaveSmith SYS:Tools/WaveSmith.info DEV:Test/arranged-#? ALL QUIET
+Echo >DEV:Test/auto.log "WaveSmithDrawers"
+Copy DEV:Release/WaveSmith/Files/WaveSmith SYS:Tools/WaveSmith ALL CLONE QUIET
+Copy DEV:Release/WaveSmith/Files/Icons/Glow/WaveSmith SYS:Tools/WaveSmith ALL CLONE QUIET
+Copy DEV:Release/WaveSmith/Files/Icons/Glow/WaveSmithDrawer.info SYS:Tools/WaveSmith.info CLONE QUIET
+List >>DEV:Test/auto.log SYS:Tools/WaveSmith ALL FILES LFORMAT "  %P%N %L"
+RX DEV:Test/WSDrawers.rexx glow
+Copy DEV:Release/WaveSmith/Files/WaveSmith SYS:Tools/WaveSmith ALL CLONE QUIET
+Copy DEV:Release/WaveSmith/Files/WaveSmith.info SYS:Tools/WaveSmith.info CLONE QUIET
+RX DEV:Test/WSDrawers.rexx classic
+Delete >NIL: SYS:Tools/WaveSmith SYS:Tools/WaveSmith.info ALL QUIET
+Echo >DEV:Test/AutoDone done

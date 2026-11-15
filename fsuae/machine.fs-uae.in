@@ -1,0 +1,53 @@
+[fs-uae]
+# One template for every machine; the GNUmakefile fills it in:
+#   run-fsuae                A1200, 68030+MMU, AGA + uaegfx RTG
+#   autotest, -rtg32, -pal   the same on COPIES of the system disk (W=)
+amiga_model = @AMIGA_MODEL@
+kickstart_file = @KICKSTART_FILE@
+
+# The 68030/68040 machines have an MMU for MuForce/MuGuardianAngel; the
+# 68000 machine has none, and MuForce refuses to start there.
+cpu = @CPU@
+@MMU_LINE@
+
+# The emulated serial port as a TCP socket: the DBG() trace and MuForce
+# hits are read with `telnet 127.0.0.1 1234` (one client at a time).
+serial_port = tcp://127.0.0.1:@SERIAL_PORT@
+
+hard_drive_0 = @SYSTEM_DRIVE@
+hard_drive_0_label = System
+
+hard_drive_1 = @PROJECT_DIST@
+hard_drive_1_label = DEV
+
+chip_memory = @CHIP_MEMORY@
+fast_memory = @FAST_MEMORY@
+
+accelerator = @ACCELERATOR@
+accelerator_memory = @ACCELERATOR_MEMORY@
+
+graphics_card = @GRAPHICS_CARD@
+graphics_card_memory = @GRAPHICS_CARD_MEMORY@
+
+# AN AUTOTEST RUNS SILENT: nobody is sitting at it. 0 for an autotest, 100
+# for a machine somebody launched (the GNUmakefile keys on the -autotest
+# suffix, as it does for the serial port).
+volume = @VOLUME@
+
+floppy_drive_0_sounds = off
+floppy_drive_1_sounds = off
+floppy_drive_2_sounds = off
+floppy_drive_3_sounds = off
+
+window_width = 960
+window_height = 720
+fullscreen = 0
+
+automatic_input_grab = 1
+cursor = 1
+initial_input_grab = 1
+mouse_integration = 0
+joystick_port_1 = nothing
+bsdsocket_library = 1
+
+title = @TITLE@

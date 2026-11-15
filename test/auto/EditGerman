@@ -1,0 +1,34 @@
+; EditGerman -- WaveSmith in German in FS-UAE under MuForce and
+; MuGuardianAngel (DEV:mutools), on PAL hires 640x256 at Topaz 8 (W=pal):
+; the widest words of the bar (Laenge, Kuerzen...) must fit there. The
+; program and its German catalog are copied to RAM:German (PROGDIR:
+; there, so the catalog is found; nothing is left beside the test build
+; for the tests after, which want WaveSmith's words English).
+; DEV:Test/EditGerman.rexx reads the boxes from the trace: the main
+; window's gadgets inside it and the bar's keys left to right, the Trim
+; window's gadgets inside it; grabs edit-german.ppm and
+; edit-german-trim.ppm.
+;
+;   gmake autotest T=EditGerman W=pal LIMIT=200
+FailAt 21
+Wait 8
+Execute DEV:mutools
+Delete >NIL: DEV:Test/german.trace DEV:Test/Edit/Fit.wav DEV:Test/Edit/Fit.prl DEV:Test/edit-german#? ENV:WaveSmith.prefs QUIET
+Echo >DEV:Test/auto.log "EditGerman"
+Version >>DEV:Test/auto.log DEV:sasc/WaveSmith FULL
+MakeDir >NIL: RAM:German RAM:German/Catalogs RAM:German/Catalogs/deutsch
+Copy >NIL: DEV:sasc/WaveSmith RAM:German/WaveSmith
+Copy >NIL: DEV:Catalogs/deutsch/WaveSmith.catalog RAM:German/Catalogs/deutsch/WaveSmith.catalog
+Copy >NIL: DEV:Test/Edit/Single.wav DEV:Test/Edit/Fit.wav
+SetEnv WaveSmithTrace DEV:Test/german.trace
+Run >NIL: RAM:German/WaveSmith DEV:Test/Edit/Fit.wav
+Wait 10
+RX DEV:Test/EditGerman.rexx
+Wait 3
+Echo >>DEV:Test/auto.log "still running:"
+Status >>DEV:Test/auto.log COMMAND=RAM:German/WaveSmith
+Echo >>DEV:Test/auto.log "the trace:"
+Type DEV:Test/german.trace >>DEV:Test/auto.log
+UnSetEnv WaveSmithTrace
+Delete >NIL: DEV:Test/Edit/Fit.wav DEV:Test/Edit/Fit.prl QUIET
+Echo >DEV:Test/AutoDone done
